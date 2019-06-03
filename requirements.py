@@ -61,11 +61,11 @@ def consoleFacingSeat(parts_list, seat):
 
 def consoleOrientation(parts_list):
     """Vehicle shall have exactly one steering wheel facing a seat."""
-    ##y1 == y2 and z/x within 30
-    if "4079" in parts_list:
-        for seat in parts_list["4079"]:
-            if seatFacingFront(parts_list, seat) and consoleFacingSeat(parts_list, seat):
-                return True
+    if len(parts_list["3829c01"]) == 1:
+        if "4079" in parts_list:
+            for seat in parts_list["4079"]:
+                if seatFacingFront(parts_list, seat) and consoleFacingSeat(parts_list, seat):
+                    return True
     return False
 
 
