@@ -3,6 +3,9 @@ Created on Jun 3, 2019
 
 @author: jlepore
 '''
+from cmath import isclose
+
+
 def getPartsList(filename):
     """Returns a parts list as a dictionary where the key is the 
     BrickLink ID Number and the data is a list of the different 
@@ -15,14 +18,32 @@ def getPartsList(filename):
             part = lst[-1].replace(".dat\n", "")
             if part not in parts_list:
                 parts_list[part] = [];
-            parts_list[part] += [lst[1:-1]]
+            parts_list[part] += [list(map(float, lst[1:-1]))]
     f.close()
     return parts_list
+
+
+def seatFacingFront(parts_list, part):
+    """Helper function for seatOrientation function to check if it is facing
+    front i.e. towards the console"""
+    front = False
+    if "3829c01" in parts_list and len(parts_list["3829c01"]) == 1:
+        front = True
+        console = parts_list["3829c01"][0]
+        for i in range(4, 13):
+            if(not isclose(console[i], part[i], rel_tol = .0005, abs_tol = .0005)):
+                front = False
+    return front    
 
 
 def seatOrientation(parts_list):
     """Vehicle shall have at least one seat facing forward."""
     # to-do
+    if "4079" in parts_list:
+        for seat in parts_list["4079"]:
+            if seatFacingFront(parts_list, seat):
+                return True
+    return False
     
 
 def seatObstruction(parts_list):
@@ -30,9 +51,22 @@ def seatObstruction(parts_list):
     # to-do
     
 
+def consoleFacingSeat(parts_list, seat):
+    ret = False
+    console = parts_list["3829c01"][0]
+    if abs(seat[1] - console[1]) <= 30 and abs(seat[2] - console[2]) <= 10 and abs(seat[3] - console[3]) <= 30:
+            ret = True
+    return ret
+    
+
 def consoleOrientation(parts_list):
     """Vehicle shall have exactly one steering wheel facing a seat."""
-    # to-do
+    ##y1 == y2 and z/x within 30
+    if "4079" in parts_list:
+        for seat in parts_list["4079"]:
+            if seatFacingFront(parts_list, seat) and consoleFacingSeat(parts_list, seat):
+                return True
+    return False
 
 
 def numWheels(parts_list):
@@ -93,3 +127,5 @@ print("\n")
 
 print(numChassis(parts_list))
 print(numWheels(parts_list))
+print(seatOrientation(parts_list))
+print(consoleOrientation(parts_list))
