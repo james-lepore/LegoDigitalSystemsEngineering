@@ -95,6 +95,16 @@ def taillightOrientation(parts_list):
 def licensePlateOrientation(parts_list):
     """Vehicle shall have a yellow license plate visible from the rear."""
     # to-do
+    '''
+    5:    abs(new[5]) = abs(old[5])
+    6:    new[6] = - old[7]
+    7:    ???????
+    8:    
+    9:
+    10:
+    11:
+    12:
+    '''
 
 
 def connectivity(parts_list):
