@@ -90,11 +90,20 @@ def headlightOrientation(parts_list):
 def taillightOrientation(parts_list):
     """Vehicle shall have at least two red lights visible from the rear"""
     # to-do
-    
+    count = 0
+    if "3829c01" in parts_list and "98138" in parts_list:
+        console = parts_list["3829c01"][0]
+        for stud in parts_list["98138"]:
+            if stud[0] == 36:
+                #check orientation
+                if isclose(stud[5], -console[6], rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(stud[8], 0, rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(stud[11], -console[12], rel_tol = .0005, abs_tol = .0005):
+                    count+=1
+    return count >= 2
 
 def licensePlateOrientation(parts_list):
     """Vehicle shall have a yellow license plate visible from the rear."""
-    # to-do
     if "3829c01" in parts_list and "3069b" in parts_list:
         console = parts_list["3829c01"][0]
         for plate in parts_list["3069b"]:
@@ -111,17 +120,6 @@ def licensePlateOrientation(parts_list):
                    isclose(plate[12], 0, rel_tol = .0005, abs_tol = .0005):
                     return True
     return False
-    
-    '''
-    5:    abs(new[5]) = abs(old[5])
-    6:    new[6] = - old[7]
-    7:    new[7] ~ 0
-    8:    
-    9:
-    10:
-    11:
-    12:
-    '''
 
 
 def connectivity(parts_list):
@@ -146,7 +144,7 @@ def cargoSpace(parts_list):
 
 
 """ TEST """
-parts_list = getPartsList("modelC")
+parts_list = getPartsList("modelA")
 for item in parts_list:
     print(item, "\n", parts_list[item])
     
@@ -157,4 +155,4 @@ print(numWheels(parts_list))
 print(seatOrientation(parts_list))
 print(consoleOrientation(parts_list))
 print(licensePlateOrientation(parts_list))
-
+print(taillightOrientation(parts_list))
