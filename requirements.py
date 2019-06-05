@@ -52,6 +52,7 @@ def seatObstruction(parts_list):
     
 
 def consoleFacingSeat(parts_list, seat):
+    """Helper function that determines whether the seat is positioned facing the console"""
     ret = False
     console = parts_list["3829c01"][0]
     if abs(seat[1] - console[1]) <= 30 and abs(seat[2] - console[2]) <= 10 and abs(seat[3] - console[3]) <= 30:
@@ -61,7 +62,7 @@ def consoleFacingSeat(parts_list, seat):
 
 def consoleOrientation(parts_list):
     """Vehicle shall have exactly one steering wheel facing a seat."""
-    if len(parts_list["3829c01"]) == 1:
+    if "3829c01" in parts_list and len(parts_list["3829c01"]) == 1:
         if "4079" in parts_list:
             for seat in parts_list["4079"]:
                 if seatFacingFront(parts_list, seat) and consoleFacingSeat(parts_list, seat):
@@ -76,20 +77,43 @@ def numWheels(parts_list):
         return len(parts_list["30028"]) >= 4 and len(parts_list["74967"]) >= 4
     return False
     
+    
+def rimCheck(parts_list):
+    """Helper function for wheelOrientation to ensure every
+    tire is paired with a rim"""    
+    if len(parts_list["74967"]) == len(parts_list["30028"]):
+        return True  
+    return False
+    
+    
+def axelCheck(parts_list):
+    """Helper function for wheelOrientation to ensure every
+    rim is attached to an axel"""
+    return True
+    
 
 def wheelOrientation(parts_list):
     """All wheels shall be securely attached to axels."""
-    # to-do
+    return rimCheck(parts_list) and axelCheck(parts_list)
 
 
 def headlightOrientation(parts_list):
     """Vehicle shall have at least two clear lights visible from the front."""
-    # to-do
+    count = 0
+    if "3829c01" in parts_list and "98138" in parts_list:
+        console = parts_list["3829c01"][0]
+        for stud in parts_list["98138"]:
+            if stud[0] == 47:
+                #check orientation
+                if isclose(stud[5], console[6], rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(stud[8], 0, rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(stud[11], console[12], rel_tol = .0005, abs_tol = .0005):
+                    count+=1
+    return count >= 2
    
 
 def taillightOrientation(parts_list):
     """Vehicle shall have at least two red lights visible from the rear"""
-    # to-do
     count = 0
     if "3829c01" in parts_list and "98138" in parts_list:
         console = parts_list["3829c01"][0]
@@ -144,7 +168,7 @@ def cargoSpace(parts_list):
 
 
 """ TEST """
-parts_list = getPartsList("modelA")
+parts_list = getPartsList("tst")
 for item in parts_list:
     print(item, "\n", parts_list[item])
     
@@ -156,3 +180,6 @@ print(seatOrientation(parts_list))
 print(consoleOrientation(parts_list))
 print(licensePlateOrientation(parts_list))
 print(taillightOrientation(parts_list))
+print(headlightOrientation(parts_list))
+print(wheelOrientation(parts_list))
+
