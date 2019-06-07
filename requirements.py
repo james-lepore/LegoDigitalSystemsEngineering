@@ -203,10 +203,9 @@ def cargoSpace(parts_list):
     # to-do
 
 
-
 ''' MARKET RESEARCH '''
 def getCost(parts_list):
-    pass    
+    pass
     
     
 def getSeatingScore(parts_list):
