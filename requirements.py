@@ -6,6 +6,7 @@ Created on Jun 3, 2019
 from cmath import isclose
 
 
+''' REQUIREMENTS '''
 def getPartsList(filename):
     """Returns a parts list as a dictionary where the key is the 
     BrickLink ID Number and the data is a list of the different 
@@ -77,7 +78,9 @@ def numWheels(parts_list):
     return False
     
 
-def helper(parts_list, wheels, axels):
+def findWheelPairs(parts_list, wheels, axels):
+    """Helper function for wheel orientation that finds the corresponding wheel
+    pairs and their axels"""
     i = 0
     while i in range(len(axels)):
         axel = axels[i]
@@ -104,7 +107,7 @@ def helper(parts_list, wheels, axels):
                     del(axels[i])
                     wheels.remove(wheel1)
                     wheels.remove(wheel2)
-                    return helper(parts_list, wheels, axels)
+                    return findWheelPairs(parts_list, wheels, axels)
                 k+=1       
             j+=1
         i+=1
@@ -113,14 +116,15 @@ def helper(parts_list, wheels, axels):
 def wheelOrientation(parts_list):
     """All wheels shall be securely attached to axels."""
     if "2926" in parts_list and "30027bc01" in parts_list and len(parts_list["2926"]) * 2 == len(parts_list["30027bc01"]):
-        axels, wheels = helper(parts_list, parts_list["30027bc01"], parts_list["2926"])
+        axels, wheels = findWheelPairs(parts_list, parts_list["30027bc01"], parts_list["2926"])
     else:
         return False
     return len(axels) == 0 and len(wheels) == 0
 
 
-def headlightOrientation(parts_list):
-    """Vehicle shall have at least two clear lights visible from the front."""
+def headlightCounter(parts_list):
+    """Helper function for headlightOrientation to count the number of
+    properly positioned headlights"""
     count = 0
     if "3829c01" in parts_list and "98138" in parts_list:
         console = parts_list["3829c01"][0]
@@ -131,11 +135,16 @@ def headlightOrientation(parts_list):
                    isclose(stud[8], 0, rel_tol = .0005, abs_tol = .0005) and \
                    isclose(stud[11], console[12], rel_tol = .0005, abs_tol = .0005):
                     count+=1
+    return count
+
+def headlightOrientation(parts_list):
+    """Vehicle shall have at least two clear lights visible from the front."""
+    count = headlightCounter(parts_list)
     return count >= 2
    
-
-def taillightOrientation(parts_list):
-    """Vehicle shall have at least two red lights visible from the rear"""
+def taillightCounter(parts_list):
+    """Helper function for taillightOrientation to count the number of
+    properly positioned taillights"""
     count = 0
     if "3829c01" in parts_list and "98138" in parts_list:
         console = parts_list["3829c01"][0]
@@ -146,6 +155,12 @@ def taillightOrientation(parts_list):
                    isclose(stud[8], 0, rel_tol = .0005, abs_tol = .0005) and \
                    isclose(stud[11], -console[12], rel_tol = .0005, abs_tol = .0005):
                     count+=1
+    return count
+                    
+    
+def taillightOrientation(parts_list):
+    """Vehicle shall have at least two red lights visible from the rear"""
+    count = taillightCounter(parts_list)
     return count >= 2
 
 def licensePlateOrientation(parts_list):
@@ -189,19 +204,99 @@ def cargoSpace(parts_list):
 
 
 
-""" TEST """
-parts_list = getPartsList("modelA")
-for item in parts_list:
-    print(item, "\n", parts_list[item])
+''' MARKET RESEARCH '''
+def getCost(parts_list):
+    pass    
     
-print("\n")
+    
+def getSeatingScore(parts_list):
+    seatingMap = [0, 40, 60, 65, 75, 80, 90, 95, 100];
+    try:
+        return seatingMap[len(parts_list["4079"])]
+    except IndexError:
+        return seatingMap[8]
+    except KeyError:
+        return seatingMap[0]
 
-print(numChassis(parts_list))
-print(numWheels(parts_list))
-print(seatOrientation(parts_list))
-print(consoleOrientation(parts_list))
-print(licensePlateOrientation(parts_list))
-print(taillightOrientation(parts_list))
-print(headlightOrientation(parts_list))
-print(wheelOrientation(parts_list))
 
+def getVentilationScore(parts_list):
+    ventilationMap = [40, 45, 70, 75, 90, 95, 100];
+    num_parts = 0
+    vent_parts = ["2412b", "61409"]
+    for part in vent_parts:
+        try:
+            num_parts += parts_list[part]
+        except:
+            continue
+    
+    try:
+        return ventilationMap[num_parts]
+    except IndexError:
+        return ventilationMap[6]
+
+
+def getStabilityScore(parts_list):
+    pass
+
+
+def getHeadlightScore(parts_list):
+    headlightMap = [0, 0, 60, 65, 80, 85, 90, 95, 100];
+    num_lights = headlightCounter(parts_list)
+    try:
+        return headlightMap[num_lights]
+    except IndexError:
+        return headlightMap[8]
+
+
+def getTaillightScore(parts_list):
+    taillightMap = [0, 0, 80, 90, 100];
+    num_lights = taillightCounter(parts_list)
+    try:
+        return taillightMap[num_lights]
+    except IndexError:
+        return taillightMap[4]
+    
+
+def getCargoSpaceScore(parts_list):
+    pass    
+    
+    
+def getAerodynamicsScore(parts_list):
+    aero_parts = ["50950", "30602", "60481", "93273", "6091", "15068", "85984"]
+
+
+''' TEST '''
+car = "modelA"
+parts_list = getPartsList(car)
+# for item in parts_list:
+#     print(item, "\n", parts_list[item])
+    
+print("--Requirements Check--")
+print("Num Chassis:\t", numChassis(parts_list))
+print("Num Wheels:\t", numWheels(parts_list))
+print("Seat Pos:\t", seatOrientation(parts_list))
+print("Console Pos:\t", consoleOrientation(parts_list))
+print("License Pos:\t", licensePlateOrientation(parts_list))
+print("Taillight Pos:\t", taillightOrientation(parts_list))
+print("Headlight Pos:\t", headlightOrientation(parts_list))
+print("Wheel Pos:\t", wheelOrientation(parts_list))
+print("Seat Clear:\t", seatObstruction(parts_list))
+print("Cargo Clear:\t", cargoSpace(parts_list))
+print("Connectivity:\t", connectivity(parts_list))
+
+
+print("\n--Market Research--")
+print("Cost:\t\t", getCost(parts_list))
+print("Seating:\t",getSeatingScore(parts_list))
+print("Ventilation:\t", getVentilationScore(parts_list))
+print("Stability:\t", getStabilityScore(parts_list))
+print("Headlight:\t", getHeadlightScore(parts_list))
+print("Taillight:\t", getTaillightScore(parts_list))
+print("Cargo Space:\t", getCargoSpaceScore(parts_list))
+print("Aerodynamics:\t", getAerodynamicsScore(parts_list))
+
+
+stabilityMap = [[0,0], [4,90], [6,100]];
+cargoMap = [[0,0], [3,25], [4,40], [5,45], [6,50], [7,80], [8,85], [9,90], [11,95], [12,100]];
+aerodynamicsMap = [[0,20], [1,30], [2,40], [3,50], [4,60], [5,70], [6,80], [7,85], [8,90], [9,95], [10,100]];
+    
