@@ -72,29 +72,51 @@ def consoleOrientation(parts_list):
 
 def numWheels(parts_list):
     """Vehicle shall have at least four wheels."""
-    # to-do
-    if "30028" in parts_list and "74967" in parts_list:
-        return len(parts_list["30028"]) >= 4 and len(parts_list["74967"]) >= 4
+    if "30027bc01" in parts_list:
+        return len(parts_list["30027bc01"]) >= 4
     return False
     
-    
-def rimCheck(parts_list):
-    """Helper function for wheelOrientation to ensure every
-    tire is paired with a rim"""    
-    if len(parts_list["74967"]) == len(parts_list["30028"]):
-        return True  
-    return False
-    
-    
-def axelCheck(parts_list):
-    """Helper function for wheelOrientation to ensure every
-    rim is attached to an axel"""
-    return True
-    
+
+def helper(parts_list, wheels, axels):
+    i = 0
+    while i in range(len(axels)):
+        axel = axels[i]
+        j = 0
+        while j in range(len(wheels)):
+            wheel1 = wheels[j]
+            k = 0
+            while k in range(len(wheels)):
+                wheel2 = wheels[k]
+                if isclose((wheel1[1] + wheel2[1])/2, axel[1], rel_tol = 1.5, abs_tol = 1.5) and \
+                   isclose(wheel1[2], axel[2] + 5, rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(wheel2[2], axel[2] + 5, rel_tol = .0005, abs_tol = .0005) and \
+                   isclose((wheel1[3] + wheel2[3])/2, axel[3], rel_tol = 1.5, abs_tol = 1.5) and \
+                   isclose(wheel1[4], wheel1[12], rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(wheel1[12], axel[6], rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(axel[6], -axel[10], rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(-axel[10], -wheel2[4], rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(-wheel2[4], -wheel2[12], rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(wheel1[6], -wheel1[10], rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(-wheel1[10], -axel[4], rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(-axel[4], -axel[12], rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(-axel[12], -wheel2[6], rel_tol = .0005, abs_tol = .0005) and \
+                   isclose(-wheel2[6], wheel2[10], rel_tol = .0005, abs_tol = .0005):
+                    del(axels[i])
+                    wheels.remove(wheel1)
+                    wheels.remove(wheel2)
+                    return helper(parts_list, wheels, axels)
+                k+=1       
+            j+=1
+        i+=1
+    return axels, wheels
 
 def wheelOrientation(parts_list):
     """All wheels shall be securely attached to axels."""
-    return rimCheck(parts_list) and axelCheck(parts_list)
+    if "2926" in parts_list and "30027bc01" in parts_list and len(parts_list["2926"]) * 2 == len(parts_list["30027bc01"]):
+        axels, wheels = helper(parts_list, parts_list["30027bc01"], parts_list["2926"])
+    else:
+        return False
+    return len(axels) == 0 and len(wheels) == 0
 
 
 def headlightOrientation(parts_list):
@@ -168,7 +190,7 @@ def cargoSpace(parts_list):
 
 
 """ TEST """
-parts_list = getPartsList("tst")
+parts_list = getPartsList("modelA")
 for item in parts_list:
     print(item, "\n", parts_list[item])
     
