@@ -71,11 +71,23 @@ def consoleOrientation(parts_list):
     return False
 
 
+def countWheels(parts_list):
+    """Helper function for numWheels that counts the number of wheels on ground level"""
+    count = 0
+    if "30027bc01" in parts_list:
+        min_height = parts_list["30027bc01"][0][2]
+        for wheel in parts_list["30027bc01"]:
+            if wheel[2] < min_height:
+                min_height = wheel[2]
+        for wheel in parts_list["30027bc01"]:
+            if isclose(min_height, wheel[2], rel_tol=.0005, abs_tol=.0005):
+                count+=1
+    return count
+
+
 def numWheels(parts_list):
     """Vehicle shall have at least four wheels."""
-    if "30027bc01" in parts_list:
-        return len(parts_list["30027bc01"]) >= 4
-    return False
+    return countWheels(parts_list) >= 4
     
 
 def findWheelPairs(parts_list, wheels, axels):
@@ -116,10 +128,10 @@ def findWheelPairs(parts_list, wheels, axels):
 def wheelOrientation(parts_list):
     """All wheels shall be securely attached to axels."""
     if "2926" in parts_list and "30027bc01" in parts_list and len(parts_list["2926"]) * 2 == len(parts_list["30027bc01"]):
-        axels, wheels = findWheelPairs(parts_list, parts_list["30027bc01"], parts_list["2926"])
+        axels, wheels = findWheelPairs(parts_list, list(parts_list["30027bc01"]), list(parts_list["2926"]))
     else:
         return False
-    return len(axels) == 0 and len(wheels) == 0
+    return len(axels) == 0
 
 
 def headlightCounter(parts_list):
@@ -205,8 +217,10 @@ def cargoSpace(parts_list):
 
 ''' MARKET RESEARCH '''
 def getCost(parts_list):
+    #data = pd.read_excel("PartsList.xlsx")
+    #print(data)
     pass
-    
+
     
 def getSeatingScore(parts_list):
     seatingMap = [0, 40, 60, 65, 75, 80, 90, 95, 100];
@@ -235,7 +249,12 @@ def getVentilationScore(parts_list):
 
 
 def getStabilityScore(parts_list):
-    pass
+    wheel_count = countWheels(parts_list)
+    if(wheel_count) < 4:
+        return 0
+    if(wheel_count) < 6:
+        return 90
+    return 100
 
 
 def getHeadlightScore(parts_list):
@@ -295,7 +314,6 @@ print("Cargo Space:\t", getCargoSpaceScore(parts_list))
 print("Aerodynamics:\t", getAerodynamicsScore(parts_list))
 
 
-stabilityMap = [[0,0], [4,90], [6,100]];
 cargoMap = [[0,0], [3,25], [4,40], [5,45], [6,50], [7,80], [8,85], [9,90], [11,95], [12,100]];
 aerodynamicsMap = [[0,20], [1,30], [2,40], [3,50], [4,60], [5,70], [6,80], [7,85], [8,90], [9,95], [10,100]];
     
