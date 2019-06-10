@@ -131,7 +131,7 @@ def wheelOrientation(parts_list):
         axels, wheels = findWheelPairs(parts_list, list(parts_list["30027bc01"]), list(parts_list["2926"]))
     else:
         return False
-    return len(axels) == 0
+    return len(axels) == 0 and len(wheels) == 0
 
 
 def headlightCounter(parts_list):
@@ -151,8 +151,7 @@ def headlightCounter(parts_list):
 
 def headlightOrientation(parts_list):
     """Vehicle shall have at least two clear lights visible from the front."""
-    count = headlightCounter(parts_list)
-    return count >= 2
+    return headlightCounter(parts_list) >= 2
    
 def taillightCounter(parts_list):
     """Helper function for taillightOrientation to count the number of
@@ -172,8 +171,7 @@ def taillightCounter(parts_list):
     
 def taillightOrientation(parts_list):
     """Vehicle shall have at least two red lights visible from the rear"""
-    count = taillightCounter(parts_list)
-    return count >= 2
+    return taillightCounter(parts_list) >= 2
 
 def licensePlateOrientation(parts_list):
     """Vehicle shall have a yellow license plate visible from the rear."""
@@ -217,9 +215,18 @@ def cargoSpace(parts_list):
 
 ''' MARKET RESEARCH '''
 def getCost(parts_list):
-    #data = pd.read_excel("PartsList.xlsx")
-    #print(data)
-    pass
+    f = open("PartsList.csv")
+    cost_list = {}
+    for line in f:
+        line = line.split(",")
+        cost_list[line[-3]] = line[-2] 
+    cost_list.__delitem__("BrickLink ID")
+    
+    total_cost = 0
+    for part in parts_list:
+        total_cost += len(parts_list[part]) * float(cost_list[part])
+    f.close()
+    return "%.2f" % (total_cost*100)
 
     
 def getSeatingScore(parts_list):
@@ -280,7 +287,8 @@ def getCargoSpaceScore(parts_list):
     
     
 def getAerodynamicsScore(parts_list):
-    aero_parts = ["50950", "30602", "60481", "93273", "6091", "15068", "85984"]
+    #aero_parts = ["50950", "30602", "60481", "93273", "6091", "15068", "85984", "54200"]
+    pass
 
 
 ''' TEST '''
@@ -316,4 +324,4 @@ print("Aerodynamics:\t", getAerodynamicsScore(parts_list))
 
 cargoMap = [[0,0], [3,25], [4,40], [5,45], [6,50], [7,80], [8,85], [9,90], [11,95], [12,100]];
 aerodynamicsMap = [[0,20], [1,30], [2,40], [3,50], [4,60], [5,70], [6,80], [7,85], [8,90], [9,95], [10,100]];
-    
+
