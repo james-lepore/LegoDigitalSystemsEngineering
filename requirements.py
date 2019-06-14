@@ -32,14 +32,13 @@ def seatFacingFront(parts_list, part):
         front = True
         console = parts_list["3829c01"][0]
         for i in range(4, 13):
-            if(not isclose(console[i], part[i], rel_tol = .0005, abs_tol = .0005)):
+            if(not isclose(console[i], part[i], abs_tol = .0005)):
                 front = False
     return front    
 
 
 def seatOrientation(parts_list):
     """Vehicle shall have at least one seat facing forward."""
-    # to-do
     if "4079" in parts_list:
         for seat in parts_list["4079"]:
             if seatFacingFront(parts_list, seat):
@@ -49,16 +48,23 @@ def seatOrientation(parts_list):
 
 def seatObstruction(parts_list):
     """Seat area shall not be obstructed by components."""
-    # to-do
+    if "4079" in parts_list:
+        for seat in parts_list["4079"]:
+            for part in parts_list:
+                for instance in parts_list[part]:
+                    if abs(seat[1] - instance[1]) < 40 and abs(seat[3] - instance[3]) < 40 and \
+                       isclose(seat[2], instance[2] + 85, abs_tol = 10):
+                        print(seat, instance)
+                        return False
+    return True
     
 
 def consoleFacingSeat(parts_list, seat):
     """Helper function that determines whether the seat is positioned facing the console"""
-    ret = False
     console = parts_list["3829c01"][0]
     if abs(seat[1] - console[1]) <= 30 and abs(seat[2] - console[2]) <= 10 and abs(seat[3] - console[3]) <= 30:
-            ret = True
-    return ret
+            return True
+    return False
     
 
 def consoleOrientation(parts_list):
@@ -80,7 +86,7 @@ def countWheels(parts_list):
             if wheel[2] < min_height:
                 min_height = wheel[2]
         for wheel in parts_list["30027bc01"]:
-            if isclose(min_height, wheel[2], rel_tol=.0005, abs_tol=.0005):
+            if isclose(min_height, wheel[2], abs_tol=.0005):
                 count+=1
     return count
 
@@ -102,20 +108,20 @@ def findWheelPairs(parts_list, wheels, axels):
             k = 0
             while k in range(len(wheels)):
                 wheel2 = wheels[k]
-                if isclose((wheel1[1] + wheel2[1])/2, axel[1], rel_tol = 1.5, abs_tol = 1.5) and \
-                   isclose(wheel1[2], axel[2] + 5, rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(wheel2[2], axel[2] + 5, rel_tol = .0005, abs_tol = .0005) and \
-                   isclose((wheel1[3] + wheel2[3])/2, axel[3], rel_tol = 1.5, abs_tol = 1.5) and \
-                   isclose(wheel1[4], wheel1[12], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(wheel1[12], axel[6], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(axel[6], -axel[10], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(-axel[10], -wheel2[4], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(-wheel2[4], -wheel2[12], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(wheel1[6], -wheel1[10], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(-wheel1[10], -axel[4], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(-axel[4], -axel[12], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(-axel[12], -wheel2[6], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(-wheel2[6], wheel2[10], rel_tol = .0005, abs_tol = .0005):
+                if isclose((wheel1[1] + wheel2[1])/2, axel[1], abs_tol = 1.5) and \
+                   isclose(wheel1[2], axel[2] + 5, abs_tol = .0005) and \
+                   isclose(wheel2[2], axel[2] + 5, abs_tol = .0005) and \
+                   isclose((wheel1[3] + wheel2[3])/2, axel[3], abs_tol = 1.5) and \
+                   isclose(wheel1[4], wheel1[12], abs_tol = .0005) and \
+                   isclose(wheel1[12], axel[6], abs_tol = .0005) and \
+                   isclose(axel[6], -axel[10], abs_tol = .0005) and \
+                   isclose(-axel[10], -wheel2[4], abs_tol = .0005) and \
+                   isclose(-wheel2[4], -wheel2[12], abs_tol = .0005) and \
+                   isclose(wheel1[6], -wheel1[10], abs_tol = .0005) and \
+                   isclose(-wheel1[10], -axel[4], abs_tol = .0005) and \
+                   isclose(-axel[4], -axel[12], abs_tol = .0005) and \
+                   isclose(-axel[12], -wheel2[6], abs_tol = .0005) and \
+                   isclose(-wheel2[6], wheel2[10], abs_tol = .0005):
                     del(axels[i])
                     wheels.remove(wheel1)
                     wheels.remove(wheel2)
@@ -143,9 +149,9 @@ def headlightCounter(parts_list):
         for stud in parts_list["98138"]:
             if stud[0] == 47:
                 #check orientation
-                if isclose(stud[5], console[6], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(stud[8], 0, rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(stud[11], console[12], rel_tol = .0005, abs_tol = .0005):
+                if isclose(stud[5], console[6], abs_tol = .0005) and \
+                   isclose(stud[8], 0, abs_tol = .0005) and \
+                   isclose(stud[11], console[12], abs_tol = .0005):
                     count+=1
     return count
 
@@ -162,9 +168,9 @@ def taillightCounter(parts_list):
         for stud in parts_list["98138"]:
             if stud[0] == 36:
                 #check orientation
-                if isclose(stud[5], -console[6], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(stud[8], 0, rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(stud[11], -console[12], rel_tol = .0005, abs_tol = .0005):
+                if isclose(stud[5], -console[6], abs_tol = .0005) and \
+                   isclose(stud[8], 0, abs_tol = .0005) and \
+                   isclose(stud[11], -console[12], abs_tol = .0005):
                     count+=1
     return count
                     
@@ -180,15 +186,15 @@ def licensePlateOrientation(parts_list):
         for plate in parts_list["3069b"]:
             if plate[0] == 14.0:
                 #check orientation
-                if isclose(abs(plate[4]), abs(console[4]), rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(-plate[5], console[6], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(plate[6], 0, rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(plate[7], 0, rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(plate[8], 0, rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(abs(plate[9]), 1, rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(abs(plate[10]), abs(console[10]), rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(-plate[11], console[12], rel_tol = .0005, abs_tol = .0005) and \
-                   isclose(plate[12], 0, rel_tol = .0005, abs_tol = .0005):
+                if isclose(abs(plate[4]), abs(console[4]), abs_tol = .0005) and \
+                   isclose(-plate[5], console[6], abs_tol = .0005) and \
+                   isclose(plate[6], 0, abs_tol = .0005) and \
+                   isclose(plate[7], 0, abs_tol = .0005) and \
+                   isclose(plate[8], 0, abs_tol = .0005) and \
+                   isclose(abs(plate[9]), 1, abs_tol = .0005) and \
+                   isclose(abs(plate[10]), abs(console[10]), abs_tol = .0005) and \
+                   isclose(-plate[11], console[12], abs_tol = .0005) and \
+                   isclose(plate[12], 0, abs_tol = .0005):
                     return True
     return False
 
@@ -226,11 +232,19 @@ def getCost(parts_list):
     for part in parts_list:
         total_cost += len(parts_list[part]) * float(cost_list[part])
     f.close()
-    return "%.2f" % (total_cost*100)
+    return "%.2f" % (total_cost * 100)
 
 
 def getMarketPrice(parts_list):
-    pass
+    price = getSeatingScore(parts_list) * .25 + getVentilationScore(parts_list) * .15 \
+        + getStabilityScore(parts_list) * .05 + getHeadlightScore(parts_list) * .05 \
+        + getTaillightScore(parts_list) * .05 + getCargoSpaceScore(parts_list) * .25 \
+        + getAerodynamicsScore(parts_list) * .20
+    return "%.2f" % (price * 10)
+
+
+def getProfit(parts_list):
+    return "%.2f" % (float(getMarketPrice(parts_list)) - float(getCost(parts_list)))
 
 
 def getSeatingScore(parts_list):
@@ -287,7 +301,7 @@ def getTaillightScore(parts_list):
     
 
 def getCargoSpaceScore(parts_list):
-    pass    
+    return 50
 
 
 def getAerodynamicsScore(parts_list):
@@ -299,9 +313,9 @@ def getAerodynamicsScore(parts_list):
         for part in aero_parts:
             if part in parts_list:
                 for instance in parts_list[part]:
-                    if isclose(instance[6], console[6], rel_tol = .0005, abs_tol = .0005) and \
-                       isclose(instance[9], console[9], rel_tol = .0005, abs_tol = .0005) and \
-                       isclose(instance[12], console[12], rel_tol = .0005, abs_tol = .0005):
+                    if isclose(instance[6], console[6], abs_tol = .0005) and \
+                       isclose(instance[9], console[9], abs_tol = .0005) and \
+                       isclose(instance[12], console[12], abs_tol = .0005):
                         aero_score+=aero_parts[part]
     try:
         return aerodynamicsMap[int(aero_score)]
@@ -310,7 +324,7 @@ def getAerodynamicsScore(parts_list):
 
 
 ''' TEST '''
-car = "modelA"
+car = "modelC"
 parts_list = getPartsList(car)
 # for item in parts_list:
 #     print(item, "\n", parts_list[item])
@@ -337,8 +351,10 @@ print("Headlight:\t", getHeadlightScore(parts_list))
 print("Taillight:\t", getTaillightScore(parts_list))
 print("Cargo Space:\t", getCargoSpaceScore(parts_list))
 print("Aerodynamics:\t", getAerodynamicsScore(parts_list))
+print()
 print("Mfg. Cost:\t", getCost(parts_list))
 print("Market Price:\t", getMarketPrice(parts_list))
+print("Profit:\t\t", getProfit(parts_list))
 
 
 cargoMap = [[0,0], [3,25], [4,40], [5,45], [6,50], [7,80], [8,85], [9,90], [11,95], [12,100]];
