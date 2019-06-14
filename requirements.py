@@ -228,7 +228,11 @@ def getCost(parts_list):
     f.close()
     return "%.2f" % (total_cost*100)
 
-    
+
+def getMarketPrice(parts_list):
+    pass
+
+
 def getSeatingScore(parts_list):
     seatingMap = [0, 40, 60, 65, 75, 80, 90, 95, 100];
     try:
@@ -284,11 +288,25 @@ def getTaillightScore(parts_list):
 
 def getCargoSpaceScore(parts_list):
     pass    
-    
-    
+
+
 def getAerodynamicsScore(parts_list):
-    #aero_parts = ["50950", "30602", "60481", "93273", "6091", "15068", "85984", "54200"]
-    pass
+    aero_parts = {"50950":2, "30602":3, "60481":1.5, "93273":1, "6091":1, "15068":2.5, "85984":1, "54200":0.5}
+    aerodynamicsMap = [20, 30, 40, 50, 60, 70, 80, 85, 90, 95, 100];
+    aero_score = 0
+    if "3829c01" in parts_list:
+        console = parts_list["3829c01"][0]
+        for part in aero_parts:
+            if part in parts_list:
+                for instance in parts_list[part]:
+                    if isclose(instance[6], console[6], rel_tol = .0005, abs_tol = .0005) and \
+                       isclose(instance[9], console[9], rel_tol = .0005, abs_tol = .0005) and \
+                       isclose(instance[12], console[12], rel_tol = .0005, abs_tol = .0005):
+                        aero_score+=aero_parts[part]
+    try:
+        return aerodynamicsMap[int(aero_score)]
+    except IndexError:
+        return aerodynamicsMap[10]
 
 
 ''' TEST '''
@@ -312,7 +330,6 @@ print("Connectivity:\t", connectivity(parts_list))
 
 
 print("\n--Market Research--")
-print("Cost:\t\t", getCost(parts_list))
 print("Seating:\t",getSeatingScore(parts_list))
 print("Ventilation:\t", getVentilationScore(parts_list))
 print("Stability:\t", getStabilityScore(parts_list))
@@ -320,8 +337,10 @@ print("Headlight:\t", getHeadlightScore(parts_list))
 print("Taillight:\t", getTaillightScore(parts_list))
 print("Cargo Space:\t", getCargoSpaceScore(parts_list))
 print("Aerodynamics:\t", getAerodynamicsScore(parts_list))
+print("Mfg. Cost:\t", getCost(parts_list))
+print("Market Price:\t", getMarketPrice(parts_list))
 
 
 cargoMap = [[0,0], [3,25], [4,40], [5,45], [6,50], [7,80], [8,85], [9,90], [11,95], [12,100]];
-aerodynamicsMap = [[0,20], [1,30], [2,40], [3,50], [4,60], [5,70], [6,80], [7,85], [8,90], [9,95], [10,100]];
+
 
