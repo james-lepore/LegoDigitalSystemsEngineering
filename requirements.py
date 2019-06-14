@@ -232,7 +232,7 @@ def getCost(parts_list):
     for part in parts_list:
         total_cost += len(parts_list[part]) * float(cost_list[part])
     f.close()
-    return "%.2f" % (total_cost * 100)
+    return "%.2f" % (total_cost)
 
 
 def getMarketPrice(parts_list):
@@ -240,7 +240,7 @@ def getMarketPrice(parts_list):
         + getStabilityScore(parts_list) * .05 + getHeadlightScore(parts_list) * .05 \
         + getTaillightScore(parts_list) * .05 + getCargoSpaceScore(parts_list) * .25 \
         + getAerodynamicsScore(parts_list) * .20
-    return "%.2f" % (price * 10)
+    return "%.2f" % (price)
 
 
 def getProfit(parts_list):
@@ -258,15 +258,14 @@ def getSeatingScore(parts_list):
 
 
 def getVentilationScore(parts_list):
-    ventilationMap = [40, 45, 70, 75, 90, 95, 100];
+    ventilationMap = [25, 45, 60, 75, 85, 95, 100];
     num_parts = 0
     vent_parts = ["2412b", "61409"]
     for part in vent_parts:
         try:
-            num_parts += parts_list[part]
+            num_parts += len(parts_list[part])
         except:
             continue
-    
     try:
         return ventilationMap[num_parts]
     except IndexError:
@@ -301,7 +300,9 @@ def getTaillightScore(parts_list):
     
 
 def getCargoSpaceScore(parts_list):
-    return 50
+    # to-do
+    #cargoMap = [[0,0], [3,25], [4,40], [5,45], [6,50], [7,80], [8,85], [9,90], [11,95], [12,100]];
+    return 0
 
 
 def getAerodynamicsScore(parts_list):
@@ -324,7 +325,7 @@ def getAerodynamicsScore(parts_list):
 
 
 ''' TEST '''
-car = "modelC"
+car = "modelA"
 parts_list = getPartsList(car)
 # for item in parts_list:
 #     print(item, "\n", parts_list[item])
@@ -342,7 +343,6 @@ print("Seat Clear:\t", seatObstruction(parts_list))
 print("Cargo Clear:\t", cargoSpace(parts_list))
 print("Connectivity:\t", connectivity(parts_list))
 
-
 print("\n--Market Research--")
 print("Seating:\t",getSeatingScore(parts_list))
 print("Ventilation:\t", getVentilationScore(parts_list))
@@ -351,12 +351,9 @@ print("Headlight:\t", getHeadlightScore(parts_list))
 print("Taillight:\t", getTaillightScore(parts_list))
 print("Cargo Space:\t", getCargoSpaceScore(parts_list))
 print("Aerodynamics:\t", getAerodynamicsScore(parts_list))
-print()
-print("Mfg. Cost:\t", getCost(parts_list))
-print("Market Price:\t", getMarketPrice(parts_list))
-print("Profit:\t\t", getProfit(parts_list))
 
-
-cargoMap = [[0,0], [3,25], [4,40], [5,45], [6,50], [7,80], [8,85], [9,90], [11,95], [12,100]];
-
+print("\n--Summary--")
+print("Mfg. Cost:\t$", getCost(parts_list))
+print("Market Price:\t$", getMarketPrice(parts_list))
+print("Net Profit:\t$", getProfit(parts_list))
 
