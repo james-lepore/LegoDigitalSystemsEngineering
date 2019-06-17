@@ -52,9 +52,8 @@ def seatObstruction(parts_list):
         for seat in parts_list["4079"]:
             for part in parts_list:
                 for instance in parts_list[part]:
-                    if abs(seat[1] - instance[1]) < 40 and abs(seat[3] - instance[3]) < 40 and \
-                       isclose(seat[2], instance[2] + 85, abs_tol = 10):
-                        print(seat, instance)
+                    if abs(seat[1] - instance[1]) < 29 and abs(seat[3] - instance[3]) < 29 and \
+                       isclose(seat[2], instance[2] + 45, abs_tol = 40):
                         return False
     return True
     
@@ -226,12 +225,13 @@ def getCost(parts_list):
     for line in f:
         line = line.split(",")
         cost_list[line[-3]] = line[-2] 
-    cost_list.__delitem__("BrickLink ID")
+    cost_list.pop("BrickLink ID")
+    f.close()
     
     total_cost = 0
     for part in parts_list:
         total_cost += len(parts_list[part]) * float(cost_list[part])
-    f.close()
+    
     return "%.2f" % (total_cost)
 
 
@@ -299,10 +299,49 @@ def getTaillightScore(parts_list):
         return taillightMap[4]
     
 
+def findMaxVolume(parts_list):
+    if "3032" in parts_list:
+        chassis = parts_list["3032"][0]
+        base = 9600
+    elif "3035" in parts_list:
+        chassis = parts_list["3035"][0]
+        base = 12800
+    else:
+        chassis = parts_list["3030"][0]
+        base = 16000
+        
+    hmin = hmax = chassis[2]
+    for part in parts_list:
+        for instance in parts_list[part]:
+            if instance[2] < hmin:
+                hmin = instance[2]
+            if instance[2] > hmax:
+                hmax = instance[2]
+    
+    height = hmax - hmin
+    return base * height
+
 def getCargoSpaceScore(parts_list):
-    # to-do
     #cargoMap = [[0,0], [3,25], [4,40], [5,45], [6,50], [7,80], [8,85], [9,90], [11,95], [12,100]];
-    return 0
+    if numChassis(parts_list):
+        max_vol = findMaxVolume(parts_list)
+    else:
+        max_vol = 0
+    
+    f = open("PartsList.csv")
+    volume_list = {}
+    for line in f:
+        line = line.split(",")
+        volume_list[line[-3]] = line[-1] 
+    volume_list.pop("BrickLink ID")
+    f.close()
+    
+    vol = 0
+    for part in parts_list:
+        vol += len(parts_list[part]) * float(volume_list[part])
+    
+    print(vol,max_vol)
+    return vol/max_vol 
 
 
 def getAerodynamicsScore(parts_list):
@@ -327,9 +366,9 @@ def getAerodynamicsScore(parts_list):
 ''' TEST '''
 car = "modelA"
 parts_list = getPartsList(car)
-# for item in parts_list:
-#     print(item, "\n", parts_list[item])
-    
+#for item in parts_list:
+#    print(item, "\n", parts_list[item])
+
 print("--Requirements Check--")
 print("Num Chassis:\t", numChassis(parts_list))
 print("Num Wheels:\t", numWheels(parts_list))
