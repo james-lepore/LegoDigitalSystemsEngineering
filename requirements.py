@@ -303,12 +303,15 @@ def findMaxVolume(parts_list):
     if "3032" in parts_list:
         chassis = parts_list["3032"][0]
         base = 9600
+        multiplier = 1.0
     elif "3035" in parts_list:
         chassis = parts_list["3035"][0]
         base = 12800
+        multiplier = 1.3
     else:
         chassis = parts_list["3030"][0]
         base = 16000
+        multiplier = 1.5
         
     hmin = hmax = chassis[2]
     for part in parts_list:
@@ -318,15 +321,15 @@ def findMaxVolume(parts_list):
             if instance[2] > hmax:
                 hmax = instance[2]
     
-    height = hmax - hmin
-    return base * height
+    height = hmax - hmin + 8
+    return base * height * multiplier
 
 def getCargoSpaceScore(parts_list):
     cargoMap = [0, 15, 25, 40, 50, 65, 85, 90, 95, 100];
     if numChassis(parts_list):
         max_vol = findMaxVolume(parts_list)
     else:
-        max_vol = 0
+        max_vol = 1
     
     f = open("PartsList.csv")
     volume_list = {}
@@ -341,7 +344,7 @@ def getCargoSpaceScore(parts_list):
         vol += len(parts_list[part]) * float(volume_list[part])
     ratio =  vol/max_vol 
     
-    if ratio > .75:
+    if ratio > .8:
         return cargoMap[0]
     elif ratio > .7:
         return cargoMap[1]
@@ -349,18 +352,19 @@ def getCargoSpaceScore(parts_list):
         return cargoMap[2]
     elif ratio > .6:
         return cargoMap[3]
-    elif ratio > .55:
-        return cargoMap[4]
     elif ratio > .5:
-        return cargoMap[5]
-    elif ratio > .45:
-        return cargoMap[6]
+        return cargoMap[4]
     elif ratio > .4:
-        return cargoMap[7]
+        return cargoMap[5]
     elif ratio > .35:
+        return cargoMap[6]
+    elif ratio > .3:
+        return cargoMap[7]
+    elif ratio > .25:
         return cargoMap[8]
     else:
         return cargoMap[9]
+
 
 def getAerodynamicsScore(parts_list):
     aero_parts = {"50950":2, "30602":3, "60481":1.5, "93273":1, "6091":1, "15068":2.5, "85984":1, "54200":0.5}
@@ -382,35 +386,38 @@ def getAerodynamicsScore(parts_list):
 
 
 ''' TEST '''
-car = "modelA"
-parts_list = getPartsList(car)
-#for item in parts_list:
-#    print(item, "\n", parts_list[item])
-
-print("--Requirements Check--")
-print("Num Chassis:\t", numChassis(parts_list))
-print("Num Wheels:\t", numWheels(parts_list))
-print("Seat Pos:\t", seatOrientation(parts_list))
-print("Console Pos:\t", consoleOrientation(parts_list))
-print("License Pos:\t", licensePlateOrientation(parts_list))
-print("Taillight Pos:\t", taillightOrientation(parts_list))
-print("Headlight Pos:\t", headlightOrientation(parts_list))
-print("Wheel Pos:\t", wheelOrientation(parts_list))
-print("Seat Clear:\t", seatObstruction(parts_list))
-print("Cargo Clear:\t", cargoSpace(parts_list))
-print("Connectivity:\t", connectivity(parts_list))
-
-print("\n--Market Research--")
-print("Seating:\t",getSeatingScore(parts_list))
-print("Ventilation:\t", getVentilationScore(parts_list))
-print("Stability:\t", getStabilityScore(parts_list))
-print("Headlight:\t", getHeadlightScore(parts_list))
-print("Taillight:\t", getTaillightScore(parts_list))
-print("Cargo Space:\t", getCargoSpaceScore(parts_list))
-print("Aerodynamics:\t", getAerodynamicsScore(parts_list))
-
-print("\n--Summary--")
-print("Mfg. Cost:\t$", getCost(parts_list))
-print("Market Price:\t$", getMarketPrice(parts_list))
-print("Net Profit:\t$", getProfit(parts_list))
-
+if __name__ == "__main__":
+    car = "modelA"
+    parts_list = getPartsList(car)
+    print(car)
+    
+    #for item in parts_list:
+    #    print(item, "\n", parts_list[item])
+    
+    print("\n--Requirements Check--")
+    print("Num Chassis:\t", numChassis(parts_list))
+    print("Num Wheels:\t", numWheels(parts_list))
+    print("Seat Pos:\t", seatOrientation(parts_list))
+    print("Console Pos:\t", consoleOrientation(parts_list))
+    print("License Pos:\t", licensePlateOrientation(parts_list))
+    print("Taillight Pos:\t", taillightOrientation(parts_list))
+    print("Headlight Pos:\t", headlightOrientation(parts_list))
+    print("Wheel Pos:\t", wheelOrientation(parts_list))
+    print("Seat Clear:\t", seatObstruction(parts_list))
+    print("Cargo Clear:\t", cargoSpace(parts_list))
+    print("Connectivity:\t", connectivity(parts_list))
+    
+    print("\n--Market Research--")
+    print("Seating:\t",getSeatingScore(parts_list))
+    print("Ventilation:\t", getVentilationScore(parts_list))
+    print("Stability:\t", getStabilityScore(parts_list))
+    print("Headlight:\t", getHeadlightScore(parts_list))
+    print("Taillight:\t", getTaillightScore(parts_list))
+    print("Cargo Space:\t", getCargoSpaceScore(parts_list))
+    print("Aerodynamics:\t", getAerodynamicsScore(parts_list))
+    
+    print("\n--Summary--")
+    print("Mfg. Cost:\t$", getCost(parts_list))
+    print("Market Price:\t$", getMarketPrice(parts_list))
+    print("Net Profit:\t$", getProfit(parts_list))
+    
