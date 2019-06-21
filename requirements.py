@@ -213,10 +213,6 @@ def numChassis(parts_list):
     return count == 1
 
 
-def cargoSpace(parts_list):
-    """Internal cargo space shall not be filled with wall pieces."""
-    # to-do
-
 
 ''' MARKET RESEARCH '''
 def getCost(parts_list):
@@ -404,7 +400,6 @@ if __name__ == "__main__":
     print("Headlight Pos:\t", headlightOrientation(parts_list))
     print("Wheel Pos:\t", wheelOrientation(parts_list))
     print("Seat Clear:\t", seatObstruction(parts_list))
-    print("Cargo Clear:\t", cargoSpace(parts_list))
     print("Connectivity:\t", connectivity(parts_list))
     
     print("\n--Market Research--")
