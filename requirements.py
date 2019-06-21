@@ -322,7 +322,7 @@ def findMaxVolume(parts_list):
     return base * height
 
 def getCargoSpaceScore(parts_list):
-    #cargoMap = [[0,0], [3,25], [4,40], [5,45], [6,50], [7,80], [8,85], [9,90], [11,95], [12,100]];
+    cargoMap = [0, 15, 25, 40, 50, 65, 85, 90, 95, 100];
     if numChassis(parts_list):
         max_vol = findMaxVolume(parts_list)
     else:
@@ -339,10 +339,28 @@ def getCargoSpaceScore(parts_list):
     vol = 0
     for part in parts_list:
         vol += len(parts_list[part]) * float(volume_list[part])
+    ratio =  vol/max_vol 
     
-    print(vol,max_vol)
-    return vol/max_vol 
-
+    if ratio > .75:
+        return cargoMap[0]
+    elif ratio > .7:
+        return cargoMap[1]
+    elif ratio > .65:
+        return cargoMap[2]
+    elif ratio > .6:
+        return cargoMap[3]
+    elif ratio > .55:
+        return cargoMap[4]
+    elif ratio > .5:
+        return cargoMap[5]
+    elif ratio > .45:
+        return cargoMap[6]
+    elif ratio > .4:
+        return cargoMap[7]
+    elif ratio > .35:
+        return cargoMap[8]
+    else:
+        return cargoMap[9]
 
 def getAerodynamicsScore(parts_list):
     aero_parts = {"50950":2, "30602":3, "60481":1.5, "93273":1, "6091":1, "15068":2.5, "85984":1, "54200":0.5}
