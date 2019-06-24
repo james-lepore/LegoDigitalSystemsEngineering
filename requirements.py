@@ -7,20 +7,18 @@ from cmath import isclose
 
 
 ''' REQUIREMENTS '''
-def getPartsList(filename):
+def getPartsList(lines):
     """Returns a parts list as a dictionary where the key is the 
     BrickLink ID Number and the data is a list of the different 
     instances of that part within the model"""
     parts_list = {}
-    f = open(filename + ".ldr")
-    for line in f:
+    for line in lines:
         lst = line.split(" ")
         if lst[0] == '1':
-            part = lst[-1].replace(".dat\n", "")
+            part = lst[-1].replace(".dat\r", "")
             if part not in parts_list:
                 parts_list[part] = [];
             parts_list[part] += [list(map(float, lst[1:-1]))]
-    f.close()
     return parts_list
 
 
