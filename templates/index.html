@@ -4,8 +4,36 @@
 		
 	</head>
 	<body>
-		<p id = "bob">Bob</p>
-		<input id ="file" type="file" accept=".ldr" onchange = "myFunction()">
+		<input id ="file" type="file" accept=".ldr" onchange = "getResults()">
+		<div>
+			<h3>Requirements</h3>
+			<p><span class = "req">❔</span> Vehicle shall have at least one seat facing forward.</p>
+			<p><span class = "req">❔</span> Seat area shall not be obstructed by components.</p>
+			<p><span class = "req">❔</span> Vehicle shall have exactly one steering wheel facing a seat.</p>
+			<p><span class = "req">❔</span> Vehicle shall have at least four wheels.</p>
+			<p><span class = "req">❔</span> All wheels shall be securely attached to axels.</p>
+			<p><span class = "req">❔</span> Vehicle shall have at least two clear lights visible from the front.</p>
+			<p><span class = "req">❔</span> Vehicle shall have at least two red lights visible from the rear.</p>
+			<p><span class = "req">❔</span> Vehicle shall have a yellow license plate visible from the rear.</p>
+			<p><span class = "req">❔</span> All components shall be secured to the chassis without gaps.</p>
+			<p><span class = "req">❔</span> Only one chassis shall be used.</p>
+		</div>
+		<div>
+			<h3>Market Research</h3>
+			<p>Seating: <span class = "rsch">__</span></p>
+			<p>Ventilation: <span class = "rsch">__</span></p>
+			<p>Stability: <span class = "rsch">__</span></p>
+			<p>Headlights: <span class = "rsch">__</span></p>
+			<p>Taillights: <span class = "rsch">__</span></p>
+			<p>Cargo Space: <span class = "rsch">__</span></p>
+			<p>Aerodynamics: <span class = "rsch">__</span></p>
+		</div>
+		<div>
+			<h3>Summary</h3>
+			<p>Cost: <span class = "rsch">__</span></p>
+			<p>Market Price: <span class = "rsch">__</span></p>
+			<p>Profit: <span class = "rsch">__</span></p>
+		</div>
 	</body>
 	<script src={{ url_for('static', filename='jquery-3.4.1.min.js') }}></script>
 	<script src={{ url_for('static', filename='getData.js') }}></script>

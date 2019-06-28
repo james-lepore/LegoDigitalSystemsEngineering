@@ -15,17 +15,41 @@ def index():
 
 
 @app.route("/request", methods=["POST"])
-def get_data():
+def getData():
     f = request.form['contents']
     lines = f.split("\n")
     parts_list = script.getPartsList(lines)
-    
-    for item in parts_list:
-        print(item, ":", len(parts_list[item]))
-    
-    return jsonify(parts_list)
+    results = [script.seatOrientation(parts_list), \
+               script.seatObstruction(parts_list), \
+               script.consoleOrientation(parts_list), \
+               script.numWheels(parts_list), \
+               script.wheelOrientation(parts_list), \
+               script.headlightOrientation(parts_list), \
+               script.taillightOrientation(parts_list), \
+               script.licensePlateOrientation(parts_list), \
+               script.connectivity(parts_list), \
+               script.numChassis(parts_list)]
+    return jsonify(results)
+
+
+@app.route("/metrics", methods=["POST"])
+def getMetrics():
+    f = request.form['contents']
+    lines = f.split("\n")
+    parts_list = script.getPartsList(lines)
+    results = [script.getSeatingScore(parts_list), \
+               script.getVentilationScore(parts_list), \
+               script.getStabilityScore(parts_list), \
+               script.getHeadlightScore(parts_list), \
+               script.getTaillightScore(parts_list), \
+               script.getCargoSpaceScore(parts_list), \
+               script.getAerodynamicsScore(parts_list), \
+               script.getCost(parts_list), \
+               script.getMarketPrice(parts_list), \
+               script.getProfit(parts_list)]
+    return jsonify(results)
+
 
 if __name__ == '__main__':
     app.run("0.0.0.0", "3000", debug=True)
-    
     

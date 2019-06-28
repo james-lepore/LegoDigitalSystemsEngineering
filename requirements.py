@@ -199,6 +199,7 @@ def licensePlateOrientation(parts_list):
 def connectivity(parts_list):
     """All components shall be secured to the chassis without gaps."""
     # to-do
+    return True;
 
 
 def numChassis(parts_list):
