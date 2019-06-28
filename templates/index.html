@@ -1,9 +1,11 @@
 <html>
 	<head>
-		<title> TEST </title>
-		
+		<title>LEGO Vehicle Analysis</title>
+		<link rel = 'stylesheet' href = 
+		{{url_for('static', filename = 'style.css')}}></link>
 	</head>
 	<body>
+		<h2>LEGO Vehicle Analysis</h2>
 		<input id ="file" type="file" accept=".ldr" onchange = "getResults()">
 		<div>
 			<h3>Requirements</h3>
@@ -38,3 +40,4 @@
 	<script src={{ url_for('static', filename='jquery-3.4.1.min.js') }}></script>
 	<script src={{ url_for('static', filename='getData.js') }}></script>
 </html>
+

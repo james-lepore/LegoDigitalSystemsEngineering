@@ -53,7 +53,7 @@ def seatObstruction(parts_list):
                     if abs(seat[1] - instance[1]) < 29 and abs(seat[3] - instance[3]) < 29 and \
                        isclose(seat[2], instance[2] + 45, abs_tol = 40):
                         return False
-    return True
+    return seatOrientation(parts_list)
     
 
 def consoleFacingSeat(parts_list, seat):
@@ -128,6 +128,7 @@ def findWheelPairs(parts_list, wheels, axels):
         i+=1
     return axels, wheels
 
+
 def wheelOrientation(parts_list):
     """All wheels shall be securely attached to axels."""
     if "2926" in parts_list and "30027bc01" in parts_list and len(parts_list["2926"]) * 2 == len(parts_list["30027bc01"]):
@@ -152,9 +153,11 @@ def headlightCounter(parts_list):
                     count+=1
     return count
 
+
 def headlightOrientation(parts_list):
     """Vehicle shall have at least two clear lights visible from the front."""
     return headlightCounter(parts_list) >= 2
+   
    
 def taillightCounter(parts_list):
     """Helper function for taillightOrientation to count the number of
@@ -175,6 +178,7 @@ def taillightCounter(parts_list):
 def taillightOrientation(parts_list):
     """Vehicle shall have at least two red lights visible from the rear"""
     return taillightCounter(parts_list) >= 2
+
 
 def licensePlateOrientation(parts_list):
     """Vehicle shall have a yellow license plate visible from the rear."""
@@ -199,7 +203,7 @@ def licensePlateOrientation(parts_list):
 def connectivity(parts_list):
     """All components shall be secured to the chassis without gaps."""
     # to-do
-    return True;
+    return True
 
 
 def numChassis(parts_list):
@@ -318,6 +322,7 @@ def findMaxVolume(parts_list):
     
     height = hmax - hmin + 8
     return base * height * multiplier
+
 
 def getCargoSpaceScore(parts_list):
     cargoMap = [0, 15, 25, 40, 50, 65, 85, 90, 95, 100];
