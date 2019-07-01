@@ -29,7 +29,7 @@ function getResults() {
 				if(data[i]){
 					results[i].innerHTML = "✔";
 				} else {
-					results[i].innerHTML = "✘";
+					results[i].innerHTML = "❌";
 				}
 			}
 

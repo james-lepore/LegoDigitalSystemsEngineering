@@ -1,0 +1,38 @@
+span[data-toggle="tooltip"]{
+	cursor: pointer;
+}
+
+#navbar{
+	display: flex;
+	justify-content: space-between;
+}
+
+.nav-link{
+	color:#cccccc;
+}
+
+.nav-link:hover{
+	color:white;
+}
+
+#carSelect{
+	cursor:pointer;
+	color:#007bff;
+}
+
+#car-select-modal-body{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.car-img{
+	padding-right: 0;
+	padding-left: 0;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.jumbotron{
+	padding-bottom: 1.5em;
+}

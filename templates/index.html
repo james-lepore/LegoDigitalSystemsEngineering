@@ -1,43 +1,169 @@
 <html>
 	<head>
-		<title>LEGO Vehicle Analysis</title>
+		<title>ISE Module</title>
 		<link rel = 'stylesheet' href = 
-		{{url_for('static', filename = 'style.css')}}></link>
+		{{url_for('static', filename = 'css/bootstrap-reboot.css')}}></link>
+		<link rel = 'stylesheet' href = 
+		{{url_for('static', filename = 'css/bootstrap.css')}}></link>
+		<link rel = 'stylesheet' href = 
+		{{url_for('static', filename = 'css/style.css')}}></link>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
-		<h2>LEGO Vehicle Analysis</h2>
-		<input id ="file" type="file" accept=".ldr" onchange = "getResults()">
-		<div>
-			<h3>Requirements</h3>
-			<p><span class = "req">❔</span> Vehicle shall have at least one seat facing forward.</p>
-			<p><span class = "req">❔</span> Seat area shall not be obstructed by components.</p>
-			<p><span class = "req">❔</span> Vehicle shall have exactly one steering wheel facing a seat.</p>
-			<p><span class = "req">❔</span> Vehicle shall have at least four wheels.</p>
-			<p><span class = "req">❔</span> All wheels shall be securely attached to axels.</p>
-			<p><span class = "req">❔</span> Vehicle shall have at least two clear lights visible from the front.</p>
-			<p><span class = "req">❔</span> Vehicle shall have at least two red lights visible from the rear.</p>
-			<p><span class = "req">❔</span> Vehicle shall have a yellow license plate visible from the rear.</p>
-			<p><span class = "req">❔</span> All components shall be secured to the chassis without gaps.</p>
-			<p><span class = "req">❔</span> Only one chassis shall be used.</p>
-		</div>
-		<div>
-			<h3>Market Research</h3>
-			<p>Seating: <span class = "rsch">__</span></p>
-			<p>Ventilation: <span class = "rsch">__</span></p>
-			<p>Stability: <span class = "rsch">__</span></p>
-			<p>Headlights: <span class = "rsch">__</span></p>
-			<p>Taillights: <span class = "rsch">__</span></p>
-			<p>Cargo Space: <span class = "rsch">__</span></p>
-			<p>Aerodynamics: <span class = "rsch">__</span></p>
-		</div>
-		<div>
-			<h3>Summary</h3>
-			<p>Cost: <span class = "rsch">__</span></p>
-			<p>Market Price: <span class = "rsch">__</span></p>
-			<p>Profit: <span class = "rsch">__</span></p>
-		</div>
+		<nav id="navbar" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+		  	<a class="navbar-brand" href="#">Industrial & Systems Engineering Module</a>
+		  	<ul class="nav nav-pills">
+		    	<li class="nav-item">
+		      		<a class="nav-link" href="#">link</a>
+		    	</li>
+		    	<li class="nav-item">
+		      		<a class="nav-link" href="#">link</a>
+		    	</li>
+		  	</ul>
+		</nav>
+		<main role = "main">
+			<div class="jumbotron">
+				<div class="container">
+					<br/>
+				  	<h1 class="display-4">Lego Vehicle Analysis</h1>
+				  	<p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus magna risus, non imperdiet diam auctor a. Curabitur erat tellus, lobortis ac justo id, luctus ornare arcu. Curabitur pretium nibh vitae vehicula cursus</p>
+				  	<hr class="my-4">
+				  	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus magna risus, non imperdiet diam auctor a. Curabitur erat tellus, lobortis ac justo id, luctus ornare arcu. Curabitur pretium nibh vitae vehicula cursus</p>
+				  	<p>
+				    	<input id ="file" type="file" accept=".ldr" onchange = "getResults()">
+				  	</p>
+				  	<hr class="my-4">
+				  	<p>
+				  		Or, choose from one of the pre-existing models <span id ="carSelect" data-toggle="modal" data-target="#carSelectModal">
+					  here</span>.
+				  	</p>
+				</div>
+			</div>
+
+			<!-- Sample Car Selection Modal -->
+			<div onClick = 'showModal("#carSelectModal")' class="modal fade" id="carSelectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  	<div class="modal-dialog" role="document">
+			    	<div class="modal-content">
+			      		<div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Sample Models</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          			<span aria-hidden="true">&times;</span>
+			        		</button>
+			      		</div>
+			      		<div id ="car-select-modal-body" class="modal-body row" >
+			        		<div class="card col-md-4 car-img" style="width: 18rem;">
+							  	<img class="card-img-top" src="{{url_for('static', filename = 'images/modelA.png')}}" alt="Model A">
+							  	<div class="card-body">
+							    	<h5 class="card-title">Model A</h5>
+							    	<p class="card-text">Some quick example text to build on the card title.</p>
+							    	<a href="#" class="btn btn-primary" data-dismiss="modal">Use Model</a>
+							    	&nbsp;or&nbsp;
+							    	<a href="{{url_for('static', filename = 'ldr/modelA.ldr')}}" class="btn btn-primary"  download>Download</a>
+							  	</div>
+							</div>
+							<div class="card col-md-4 car-img" style="width: 18rem;">
+							  	<img class="card-img-top" src="{{url_for('static', filename = 'images/modelB.png')}}" alt="Model B">
+							  	<div class="card-body">
+							    	<h5 class="card-title">Model B</h5>
+							    	<p class="card-text">Some quick example text to build on the card title.</p>
+							    	<a href="" class="btn btn-primary" data-dismiss="modal">Use Model</a>
+							    	&nbsp;or&nbsp;
+							    	<a href="{{url_for('static', filename = 'ldr/modelB.ldr')}}" class="btn btn-primary"  download>Download</a>
+							  	</div>
+							</div>
+							<div></div>
+							<div class="card col-md-4 car-img" style="width: 18rem;">
+							  	<img class="card-img-top" src="{{url_for('static', filename = 'images/modelC.png')}}" alt="Model C">
+							  	<div class="card-body">
+							    	<h5 class="card-title">Model C</h5>
+							    	<p class="card-text">Some quick example text to build on the card title.</p>
+							    	<a href="" class="btn btn-primary" data-dismiss="modal">Use Model</a>
+							    	&nbsp;or&nbsp;
+							    	<a href="{{url_for('static', filename = 'ldr/modelC.ldr')}}" class="btn btn-primary"  download>Download</a>
+							  	</div>
+							</div>
+			      		</div>
+			    	</div>
+			  	</div>
+			</div>
+
+
+			<div class="container">
+				<div class="row">
+					<div class = "col-md-4">
+						<h2>Design Requirements</h2>
+						<p>
+							<span class = "req" data-toggle="tooltip" data-placement="top" title="Do you have a seat (4079) facing the front of the car?">❔</span> 
+							Vehicle shall have at least one seat facing forward.
+						</p>
+						<p>
+							<span class = "req" data-toggle="tooltip" data-placement="top" title="Are there any pieces blocking the seat (4079) area?">❔</span> 
+							Seat area shall not be obstructed by components.
+						</p>
+						<p>
+							<span class = "req" data-toggle="tooltip" data-placement="top" title="Do you have a seat (4079) facing the steering wheel (3829c01)?">❔</span> 
+							Vehicle shall have exactly one steering wheel facing a seat.
+						</p>
+						<p>
+							<span class = "req" data-toggle="tooltip" data-placement="top" title="Do you have four of the correct type of wheel (30027bc01)?">❔</span> 
+							Vehicle shall have at least four wheels.
+						</p>
+						<p>
+							<span class = "req" data-toggle="tooltip" data-placement="top" title="Are there exactly two wheels (30027bc01) paired with every axle (2926)?">❔</span>
+							All wheels shall be securely attached to axels.
+						</p>
+						<p>
+							<span class = "req" data-toggle="tooltip" data-placement="top" title="Do you have 2 or more round tiles (98138) colored Trans-Clear facing forward?">❔</span>
+							Vehicle shall have at least two clear lights visible from the front.
+						</p>
+						<p>
+							<span class = "req" data-toggle="tooltip" data-placement="top" title="Do you have 2 or more round tiles (98138) colored Trans-Red facing backward?">❔</span>
+							Vehicle shall have at least two red lights visible from the rear.
+						</p>
+						<p>
+							<span class = "req" data-toggle="tooltip" data-placement="top" title="Do you have one rectangular tile (3069b) colored Yellow facing backward?">❔</span> 
+							Vehicle shall have a yellow license plate visible from the rear.
+						</p>
+						<p>
+							<span class = "req" data-toggle="tooltip" data-placement="top" title="Are there any pieces disconnected from the rest of the model?">❔</span> 
+							All components shall be secured to the chassis without gaps.
+						</p>
+						<p>
+							<span class = "req" data-toggle="tooltip" data-placement="top" title="Do you only have one base piece (3032/3035/3030)?">❔</span>
+							Only one chassis shall be used.
+						</p>
+						<p>For a hint on how to fulfill a certain requirement, tap the symbol next to that requirement.</p>
+					</div>
+					<div class = 'col-md-4'>
+						<h2>Market Research</h2>
+						<p>Seating: <span class = "rsch">__</span></p>
+						<p>Ventilation: <span class = "rsch">__</span></p>
+						<p>Stability: <span class = "rsch">__</span></p>
+						<p>Headlights: <span class = "rsch">__</span></p>
+						<p>Taillights: <span class = "rsch">__</span></p>
+						<p>Cargo Space: <span class = "rsch">__</span></p>
+						<p>Aerodynamics: <span class = "rsch">__</span></p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus magna risus, non imperdiet diam auctor a. Curabitur erat tellus, lobortis ac justo id, luctus ornare arcu. Curabitur pretium nibh vitae vehicula cursus.</p>
+					</div>
+					<div class = 'col-md-4'>
+						<h2>Financial Summary</h2>
+						<p>Cost: <span class = "rsch">__</span></p>
+						<p>Market Price: <span class = "rsch">__</span></p>
+						<p>Profit: <span class = "rsch">__</span></p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus magna risus, non imperdiet diam auctor a. Curabitur erat tellus, lobortis ac justo id, luctus ornare arcu. Curabitur pretium nibh vitae vehicula cursus.</p>
+					</div>
+				</div>
+				<hr>
+			</div>
+		</main>
+		<footer class='container'>
+			<p>© Company 2017-2019</p>
+		</footer>
 	</body>
-	<script src={{ url_for('static', filename='jquery-3.4.1.min.js') }}></script>
-	<script src={{ url_for('static', filename='getData.js') }}></script>
+	<script src={{ url_for('static', filename='js/jquery-3.4.1.min.js') }}></script>
+	<script src={{ url_for('static', filename='js/bootstrap.bundle.js') }}></script>
+	<script src={{ url_for('static', filename='js/getData.js') }}></script>
+	<script src={{ url_for('static', filename='js/tooltips.js') }}></script>
+	<script src={{ url_for('static', filename='js/modals.js') }}></script>
 </html>
 
