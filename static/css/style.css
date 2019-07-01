@@ -7,12 +7,8 @@ span[data-toggle="tooltip"]{
 	justify-content: space-between;
 }
 
-.nav-link{
+.nav-link, .nav-link:hover{
 	color:#cccccc;
-}
-
-.nav-link:hover{
-	color:white;
 }
 
 #carSelect{
@@ -35,4 +31,14 @@ span[data-toggle="tooltip"]{
 
 .jumbotron{
 	padding-bottom: 1.5em;
+}
+
+#content{
+	position:relative;
+}
+
+a.anchor {
+    position: relative;
+    top: -75px;
+    visibility: hidden;
 }

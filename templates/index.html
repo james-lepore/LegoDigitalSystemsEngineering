@@ -7,25 +7,32 @@
 		{{url_for('static', filename = 'css/bootstrap.css')}}></link>
 		<link rel = 'stylesheet' href = 
 		{{url_for('static', filename = 'css/style.css')}}></link>
+		<link rel='icon' href = {{url_for('static', filename = 'images/code-logo.png')}}>
+
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
+
 		<nav id="navbar" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-		  	<a class="navbar-brand" href="#">Industrial & Systems Engineering Module</a>
-		  	<ul class="nav nav-pills">
+		  	<a class="navbar-brand" href="#home">LEGO ISE Module</a>
+		  	<ul class="nav">
 		    	<li class="nav-item">
-		      		<a class="nav-link" href="#">link</a>
+		      		<a class="nav-link" href="#requirements">Requirements</a>
 		    	</li>
 		    	<li class="nav-item">
-		      		<a class="nav-link" href="#">link</a>
+		      		<a class="nav-link" href="#market">Research</a>
+		    	</li>
+		    	<li class="nav-item">
+		      		<a class="nav-link" href="#summary">Summary</a>
 		    	</li>
 		  	</ul>
 		</nav>
+		
 		<main role = "main">
-			<div class="jumbotron">
+			<div id='home' class="jumbotron">
 				<div class="container">
 					<br/>
-				  	<h1 class="display-4">Lego Vehicle Analysis</h1>
+				  	<h1 class="display-4">LEGO Vehicle Analysis</h1>
 				  	<p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus magna risus, non imperdiet diam auctor a. Curabitur erat tellus, lobortis ac justo id, luctus ornare arcu. Curabitur pretium nibh vitae vehicula cursus</p>
 				  	<hr class="my-4">
 				  	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus magna risus, non imperdiet diam auctor a. Curabitur erat tellus, lobortis ac justo id, luctus ornare arcu. Curabitur pretium nibh vitae vehicula cursus</p>
@@ -56,7 +63,7 @@
 							  	<div class="card-body">
 							    	<h5 class="card-title">Model A</h5>
 							    	<p class="card-text">Some quick example text to build on the card title.</p>
-							    	<a href="#" class="btn btn-primary" data-dismiss="modal">Use Model</a>
+							    	<a href="#" class="btn btn-primary" data-dismiss="modal" onclick="loadSample('modelA.ldr')">Use Model</a>
 							    	&nbsp;or&nbsp;
 							    	<a href="{{url_for('static', filename = 'ldr/modelA.ldr')}}" class="btn btn-primary"  download>Download</a>
 							  	</div>
@@ -66,18 +73,17 @@
 							  	<div class="card-body">
 							    	<h5 class="card-title">Model B</h5>
 							    	<p class="card-text">Some quick example text to build on the card title.</p>
-							    	<a href="" class="btn btn-primary" data-dismiss="modal">Use Model</a>
+							    	<a href="" class="btn btn-primary" data-dismiss="modal" onclick="loadSample('modelB.ldr')">Use Model</a>
 							    	&nbsp;or&nbsp;
 							    	<a href="{{url_for('static', filename = 'ldr/modelB.ldr')}}" class="btn btn-primary"  download>Download</a>
 							  	</div>
 							</div>
-							<div></div>
 							<div class="card col-md-4 car-img" style="width: 18rem;">
 							  	<img class="card-img-top" src="{{url_for('static', filename = 'images/modelC.png')}}" alt="Model C">
 							  	<div class="card-body">
 							    	<h5 class="card-title">Model C</h5>
 							    	<p class="card-text">Some quick example text to build on the card title.</p>
-							    	<a href="" class="btn btn-primary" data-dismiss="modal">Use Model</a>
+							    	<a href="" class="btn btn-primary" data-dismiss="modal" onclick="loadSample('modelC.ldr')">Use Model</a>
 							    	&nbsp;or&nbsp;
 							    	<a href="{{url_for('static', filename = 'ldr/modelC.ldr')}}" class="btn btn-primary"  download>Download</a>
 							  	</div>
@@ -89,8 +95,9 @@
 
 
 			<div class="container">
-				<div class="row">
-					<div class = "col-md-4">
+				<div class="row" data-spy='scroll' data-target='#navbar' data-offset='50'>
+					<a class='anchor' id='requirements'></a>
+					<div class="col-md-4">
 						<h2>Design Requirements</h2>
 						<p>
 							<span class = "req" data-toggle="tooltip" data-placement="top" title="Do you have a seat (4079) facing the front of the car?">❔</span> 
@@ -134,6 +141,8 @@
 						</p>
 						<p>For a hint on how to fulfill a certain requirement, tap the symbol next to that requirement.</p>
 					</div>
+
+					<a class='anchor' id='market'></a>
 					<div class = 'col-md-4'>
 						<h2>Market Research</h2>
 						<p>Seating: <span class = "rsch">__</span></p>
@@ -145,6 +154,8 @@
 						<p>Aerodynamics: <span class = "rsch">__</span></p>
 						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus magna risus, non imperdiet diam auctor a. Curabitur erat tellus, lobortis ac justo id, luctus ornare arcu. Curabitur pretium nibh vitae vehicula cursus.</p>
 					</div>
+
+					<a class='anchor' id='summary'></a>
 					<div class = 'col-md-4'>
 						<h2>Financial Summary</h2>
 						<p>Cost: <span class = "rsch">__</span></p>

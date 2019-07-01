@@ -17,6 +17,7 @@ function getResults() {
 	var reader = new FileReader();
 	reader.onload = function(e) {
 		var file_data = e.target.result;
+		console.log(file_data);
 	    $.ajax({
 	        data : {
 	          contents : file_data
@@ -67,3 +68,34 @@ function getMetrics(reqMet, parts_list){
 	}
 }
 
+
+function loadSample(file){
+	console.log('static/ldr/' + file);
+	$.ajax({
+		url:'static/ldr/' + file,
+		success:function(file_data){
+			$.ajax({
+		        data : {
+		          contents : file_data
+		        },
+		        type : 'POST',
+		        url : '/request'
+		    }).done(function(data) {
+		        var results = document.getElementsByClassName("req");
+				for(let i = 0; i < results.length; i++){
+					if(data[i]){
+						results[i].innerHTML = "✔";
+					} else {
+						results[i].innerHTML = "❌";
+					}
+				}
+
+				if(data.every(function(k){return k})){
+					getMetrics(true, file_data);
+				} else{
+					getMetrics(false, file_data);
+				}
+		    });
+		}
+	});
+};
