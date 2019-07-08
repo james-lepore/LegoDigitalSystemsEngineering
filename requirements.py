@@ -228,8 +228,10 @@ def getCost(parts_list):
     f.close()
     
     total_cost = 0
+    chassis = ["3032", "3035", "3030"]
     for part in parts_list:
         total_cost += len(parts_list[part]) * float(cost_list[part])
+            total_cost += len(parts_list[part]) * float(cost_list[part])
     
     return "%.2f" % (total_cost)
 
@@ -239,7 +241,7 @@ def getMarketPrice(parts_list):
         + getStabilityScore(parts_list) * .05 + getHeadlightScore(parts_list) * .05 \
         + getTaillightScore(parts_list) * .05 + getCargoSpaceScore(parts_list) * .25 \
         + getAerodynamicsScore(parts_list) * .20
-    return "%.2f" % (price)
+    return "%.2f" % (price * 3)
 
 
 def getProfit(parts_list):
@@ -247,7 +249,7 @@ def getProfit(parts_list):
 
 
 def getSeatingScore(parts_list):
-    seatingMap = [0, 40, 60, 65, 75, 80, 90, 95, 100];
+    seatingMap = [0, 30, 60, 70, 85, 90, 95, 97.5, 100];
     try:
         return seatingMap[len(parts_list["4079"])]
     except IndexError:
@@ -257,7 +259,7 @@ def getSeatingScore(parts_list):
 
 
 def getVentilationScore(parts_list):
-    ventilationMap = [25, 45, 60, 75, 85, 95, 100];
+    ventilationMap = [20, 35, 50, 65, 75, 90, 100];
     num_parts = 0
     vent_parts = ["2412b", "61409"]
     for part in vent_parts:
@@ -276,7 +278,7 @@ def getStabilityScore(parts_list):
     if(wheel_count) < 4:
         return 0
     if(wheel_count) < 6:
-        return 90
+        return 80
     return 100
 
 
