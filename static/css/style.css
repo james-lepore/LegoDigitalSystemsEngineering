@@ -8,7 +8,7 @@ span[data-toggle="tooltip"]{
 }
 
 .nav-link, .nav-link:hover{
-	color:#cccccc;
+	color:#e9ecef;
 }
 
 #carSelect{
@@ -38,7 +38,22 @@ span[data-toggle="tooltip"]{
 }
 
 a.anchor {
-    position: relative;
-    top: -75px;
+	position:absolute;
+    top: -65px;
     visibility: hidden;
+}
+
+.metric-contaier{
+	display: flex;
+	justify-content: space-between;
+}
+
+.weight{
+	font-size: .8rem;
+}
+
+@media (max-width: 767px){
+	.weight{
+		margin-right: 40%;
+	}
 }

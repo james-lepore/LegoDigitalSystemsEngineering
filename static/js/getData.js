@@ -3,7 +3,9 @@ function getResults() {
 	var file = input.files[0];
 	if (!file){return;}
 	if(file["name"].split('.').pop() != "ldr") {
-		alert("Invalid File");
+		alert("Invalid File. The file must be an LDraw (.ldr) file.");
+		document.location.reload(true);
+		/*
 		var results = document.getElementsByClassName("req");
 		for(let i = 0; i < results.length; i++){
 			results[i].innerHTML = "❔";
@@ -12,12 +14,13 @@ function getResults() {
 		for(let i = 0; i < results.length; i++){
 			results[i].innerHTML = "__";
 		}
+		*/
 		return;
 	}
 	var reader = new FileReader();
 	reader.onload = function(e) {
 		var file_data = e.target.result;
-		console.log(file_data);
+		//console.log(file_data);
 	    $.ajax({
 	        data : {
 	          contents : file_data
@@ -61,7 +64,11 @@ function getMetrics(reqMet, parts_list){
 	    }).done(function(data) {
 	       var results = document.getElementsByClassName("rsch");
 		    for(let i = 0; i < results.length; i++){
-				results[i].innerHTML = data[i];
+				if(i > 6){
+					results[i].innerHTML = "$" + data[i];
+				} else{
+					results[i].innerHTML = data[i];
+				}
 			}
 
 	    });

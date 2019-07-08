@@ -231,7 +231,7 @@ def getCost(parts_list):
     for part in parts_list:
         total_cost += len(parts_list[part]) * float(cost_list[part])
     
-    return "%.2f" % (total_cost * 10)
+    return "%.2f" % (total_cost)
 
 
 def getMarketPrice(parts_list):

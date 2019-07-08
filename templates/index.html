@@ -8,11 +8,9 @@
 		<link rel = 'stylesheet' href = 
 		{{url_for('static', filename = 'css/style.css')}}></link>
 		<link rel='icon' href = {{url_for('static', filename = 'images/code-logo.png')}}>
-
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
-
 		<nav id="navbar" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 		  	<a class="navbar-brand" href="#home">LEGO ISE Module</a>
 		  	<ul class="nav">
@@ -20,7 +18,7 @@
 		      		<a class="nav-link" href="#requirements">Requirements</a>
 		    	</li>
 		    	<li class="nav-item">
-		      		<a class="nav-link" href="#market">Research</a>
+		      		<a class="nav-link" href="#market">Market</a>
 		    	</li>
 		    	<li class="nav-item">
 		      		<a class="nav-link" href="#summary">Summary</a>
@@ -33,15 +31,15 @@
 				<div class="container">
 					<br/>
 				  	<h1 class="display-4">LEGO Vehicle Analysis</h1>
-				  	<p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus magna risus, non imperdiet diam auctor a. Curabitur erat tellus, lobortis ac justo id, luctus ornare arcu. Curabitur pretium nibh vitae vehicula cursus</p>
+				  	<p class="lead">Welcome to the LEGO Industrial & Systems Engineering Module. Your objective is to design a new LEGO vehicle that maximizes profit. The model must satisfy all 10 <a href="#requirements">design requirements</a> specified below, and its market price will be determined by the 7 <a href="#market">market research</a> metrics below. Good Luck!</p>
 				  	<hr class="my-4">
-				  	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus magna risus, non imperdiet diam auctor a. Curabitur erat tellus, lobortis ac justo id, luctus ornare arcu. Curabitur pretium nibh vitae vehicula cursus</p>
+				  	<p>Once you created the model of your vehicle in the Bricklink Studio, export it as a .ldr file (File → Export As → Export as LDraw) and upload it here for analysis.</p>
 				  	<p>
 				    	<input id ="file" type="file" accept=".ldr" onchange = "getResults()">
 				  	</p>
 				  	<hr class="my-4">
 				  	<p>
-				  		Or, choose from one of the pre-existing models <span id ="carSelect" data-toggle="modal" data-target="#carSelectModal">
+				  		Or, choose from one of the sample models <span id ="carSelect" data-toggle="modal" data-target="#carSelectModal">
 					  here</span>.
 				  	</p>
 				</div>
@@ -62,7 +60,7 @@
 							  	<img class="card-img-top" src="{{url_for('static', filename = 'images/modelA.png')}}" alt="Model A">
 							  	<div class="card-body">
 							    	<h5 class="card-title">Model A</h5>
-							    	<p class="card-text">Some quick example text to build on the card title.</p>
+							    	<p class="card-text">Small model with limited seating, but better ventilation.</p>
 							    	<a href="#" class="btn btn-primary" data-dismiss="modal" onclick="loadSample('modelA.ldr')">Use Model</a>
 							    	&nbsp;or&nbsp;
 							    	<a href="{{url_for('static', filename = 'ldr/modelA.ldr')}}" class="btn btn-primary"  download>Download</a>
@@ -72,7 +70,7 @@
 							  	<img class="card-img-top" src="{{url_for('static', filename = 'images/modelB.png')}}" alt="Model B">
 							  	<div class="card-body">
 							    	<h5 class="card-title">Model B</h5>
-							    	<p class="card-text">Some quick example text to build on the card title.</p>
+							    	<p class="card-text">Medium model with limited cargo space, but better aero.</p>
 							    	<a href="" class="btn btn-primary" data-dismiss="modal" onclick="loadSample('modelB.ldr')">Use Model</a>
 							    	&nbsp;or&nbsp;
 							    	<a href="{{url_for('static', filename = 'ldr/modelB.ldr')}}" class="btn btn-primary"  download>Download</a>
@@ -82,7 +80,7 @@
 							  	<img class="card-img-top" src="{{url_for('static', filename = 'images/modelC.png')}}" alt="Model C">
 							  	<div class="card-body">
 							    	<h5 class="card-title">Model C</h5>
-							    	<p class="card-text">Some quick example text to build on the card title.</p>
+							    	<p class="card-text">Large model with a greater cost, but more cargo space</p>
 							    	<a href="" class="btn btn-primary" data-dismiss="modal" onclick="loadSample('modelC.ldr')">Use Model</a>
 							    	&nbsp;or&nbsp;
 							    	<a href="{{url_for('static', filename = 'ldr/modelC.ldr')}}" class="btn btn-primary"  download>Download</a>
@@ -96,8 +94,8 @@
 
 			<div class="container">
 				<div class="row" data-spy='scroll' data-target='#navbar' data-offset='50'>
-					<a class='anchor' id='requirements'></a>
 					<div class="col-md-4">
+						<a class='anchor' id='requirements'></a>
 						<h2>Design Requirements</h2>
 						<p>
 							<span class = "req" data-toggle="tooltip" data-placement="top" title="Do you have a seat (4079) facing the front of the car?">❔</span> 
@@ -136,39 +134,60 @@
 							All components shall be secured to the chassis without gaps.
 						</p>
 						<p>
-							<span class = "req" data-toggle="tooltip" data-placement="top" title="Do you only have one base piece (3032/3035/3030)?">❔</span>
+							<span class = "req" data-toggle="tooltip" data-placement="top" title="Do you only have one chassis piece (3032/3035/3030)?">❔</span>
 							Only one chassis shall be used.
 						</p>
 						<p>For a hint on how to fulfill a certain requirement, tap the symbol next to that requirement.</p>
 					</div>
-
-					<a class='anchor' id='market'></a>
+					
 					<div class = 'col-md-4'>
+						<a class='anchor' id='market'></a>
 						<h2>Market Research</h2>
-						<p>Seating: <span class = "rsch">__</span></p>
-						<p>Ventilation: <span class = "rsch">__</span></p>
-						<p>Stability: <span class = "rsch">__</span></p>
-						<p>Headlights: <span class = "rsch">__</span></p>
-						<p>Taillights: <span class = "rsch">__</span></p>
-						<p>Cargo Space: <span class = "rsch">__</span></p>
-						<p>Aerodynamics: <span class = "rsch">__</span></p>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus magna risus, non imperdiet diam auctor a. Curabitur erat tellus, lobortis ac justo id, luctus ornare arcu. Curabitur pretium nibh vitae vehicula cursus.</p>
+						<div class='metric-contaier'>
+							<p>Seating: <span class = "rsch">__</span></p>
+							<p class='weight'>Weight: 25%</p>
+						</div>
+						<div class='metric-contaier'>
+							<p>Ventilation: <span class = "rsch">__</span></p>
+							<p class='weight'>Weight: 15%</p>
+						</div>
+						<div class='metric-contaier'>
+							<p>Stability: <span class = "rsch">__</span></p>
+							<p class='weight'>Weight: 5%</p>
+						</div>
+						<div class='metric-contaier'>
+							<p>Headlights: <span class = "rsch">__</span></p>
+							<p class='weight'>Weight: 5%</p>
+						</div>
+						<div class='metric-contaier'>
+							<p>Taillights: <span class = "rsch">__</span></p>
+							<p class='weight'>Weight: 5%</p>
+						</div>
+						<div class='metric-contaier'>
+							<p>Cargo Space: <span class = "rsch">__</span></p>
+							<p class='weight'>Weight: 25%</p>
+						</div>
+						<div class='metric-contaier'>
+							<p>Aerodynamics: <span class = "rsch">__</span></p>
+							<p class='weight'>Weight: 20%</p>
+						</div>
+						<p>The Market Price of your vehicle will only be calculated if your vehicle satisfies all the design requirements. It be determined by how well your vehicle performs in these 7 key market metric categories. Try to maximize the score in each of the categories to increase the value of your model.</p>
 					</div>
 
-					<a class='anchor' id='summary'></a>
 					<div class = 'col-md-4'>
+						<a class='anchor' id='summary'></a>
 						<h2>Financial Summary</h2>
 						<p>Cost: <span class = "rsch">__</span></p>
 						<p>Market Price: <span class = "rsch">__</span></p>
 						<p>Profit: <span class = "rsch">__</span></p>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus magna risus, non imperdiet diam auctor a. Curabitur erat tellus, lobortis ac justo id, luctus ornare arcu. Curabitur pretium nibh vitae vehicula cursus.</p>
+						<p>The cost of your model is a sum of the costs of the individual parts used. The market price was determined as a function of the scores your model earned in the market researh metrics, weighted accordingly. The difference between the price and cost results in the profit.</p>
 					</div>
 				</div>
 				<hr>
 			</div>
 		</main>
 		<footer class='container'>
-			<p>© Company 2017-2019</p>
+			<p>Copyright © 2019 Paul T. Grogan</p>
 		</footer>
 	</body>
 	<script src={{ url_for('static', filename='js/jquery-3.4.1.min.js') }}></script>
