@@ -70,7 +70,7 @@
 							  	<img class="card-img-top" src="{{url_for('static', filename = 'images/modelB.png')}}" alt="Model B">
 							  	<div class="card-body">
 							    	<h5 class="card-title">Model B</h5>
-							    	<p class="card-text">Medium model with limited cargo space, but better aero.</p>
+							    	<p class="card-text">Medium model with less cargo space, but more aerodynamics.</p>
 							    	<a href="" class="btn btn-primary" data-dismiss="modal" onclick="loadSample('modelB.ldr')">Use Model</a>
 							    	&nbsp;or&nbsp;
 							    	<a href="{{url_for('static', filename = 'ldr/modelB.ldr')}}" class="btn btn-primary"  download>Download</a>
@@ -80,7 +80,7 @@
 							  	<img class="card-img-top" src="{{url_for('static', filename = 'images/modelC.png')}}" alt="Model C">
 							  	<div class="card-body">
 							    	<h5 class="card-title">Model C</h5>
-							    	<p class="card-text">Large model with the greatest cost, but more cargo space</p>
+							    	<p class="card-text">Large model with the highest cost, but the most cargo space</p>
 							    	<a href="" class="btn btn-primary" data-dismiss="modal" onclick="loadSample('modelC.ldr')">Use Model</a>
 							    	&nbsp;or&nbsp;
 							    	<a href="{{url_for('static', filename = 'ldr/modelC.ldr')}}" class="btn btn-primary"  download>Download</a>
@@ -88,6 +88,13 @@
 							</div>
 			      		</div>
 			    	</div>
+			  	</div>
+			</div>
+
+			<!--Spinner-->
+			<div class="d-flex justify-content-center">
+			  	<div id='spinner' class="spinner-border" role="status">
+			    	<span class="sr-only">Loading...</span>
 			  	</div>
 			</div>
 

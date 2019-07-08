@@ -17,6 +17,8 @@ function getResults() {
 		*/
 		return;
 	}
+	document.getElementById("spinner").style.visibility = "visible";
+
 	var reader = new FileReader();
 	reader.onload = function(e) {
 		var file_data = e.target.result;
@@ -49,11 +51,15 @@ function getResults() {
 
 
 function getMetrics(reqMet, parts_list){
+	var spinner = document.getElementById("spinner");
+	spinner.style.visibility = "visible";
 	if(!reqMet){
 		var results = document.getElementsByClassName("rsch");
 		for(let i = 0; i < results.length; i++){
 			results[i].innerHTML = "__";
 		}
+		var spinner = document.getElementById("spinner");
+		spinner.style.visibility = "hidden";
 	} else{
 		$.ajax({
 	        data : {
@@ -70,14 +76,14 @@ function getMetrics(reqMet, parts_list){
 					results[i].innerHTML = data[i];
 				}
 			}
-
+			var spinner = document.getElementById("spinner");
+			spinner.style.visibility = "hidden";
 	    });
 	}
 }
 
 
 function loadSample(file){
-	console.log('static/ldr/' + file);
 	$.ajax({
 		url:'static/ldr/' + file,
 		success:function(file_data){
