@@ -218,6 +218,17 @@ def numChassis(parts_list):
 
 
 ''' MARKET RESEARCH '''
+def getChassisType(parts_list):
+    if numChassis(parts_list):
+        if "3032" in parts_list:
+            return "A"
+        elif "3035" in parts_list:
+            return "B"
+        else:
+            return "C"
+    return False
+
+
 def getCost(parts_list):
     f = open("PartsList.csv")
     cost_list = {}

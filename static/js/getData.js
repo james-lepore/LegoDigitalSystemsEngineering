@@ -1,3 +1,9 @@
+$(document).ready(function() {
+    document.getElementById("spinner").style.visibility = "hidden";
+	document.getElementById("overlay").style.visibility = "hidden";
+});
+
+
 function getResults() {
 	var input = document.getElementById("file");
 	var file = input.files[0];
@@ -18,6 +24,7 @@ function getResults() {
 		return;
 	}
 	document.getElementById("spinner").style.visibility = "visible";
+	document.getElementById("overlay").style.visibility = "visible";
 
 	var reader = new FileReader();
 	reader.onload = function(e) {
@@ -30,20 +37,7 @@ function getResults() {
 	        type : 'POST',
 	        url : '/request'
 	    }).done(function(data) {
-	        var results = document.getElementsByClassName("req");
-			for(let i = 0; i < results.length; i++){
-				if(data[i]){
-					results[i].innerHTML = "✔";
-				} else {
-					results[i].innerHTML = "❌";
-				}
-			}
-
-			if(data.every(function(k){return k})){
-				getMetrics(true, file_data);
-			} else{
-				getMetrics(false, file_data);
-			}
+	        fillReqs(file_data, data);
 	    });
 	};
 	reader.readAsText(file);
@@ -51,15 +45,13 @@ function getResults() {
 
 
 function getMetrics(reqMet, parts_list){
-	var spinner = document.getElementById("spinner");
-	spinner.style.visibility = "visible";
 	if(!reqMet){
 		var results = document.getElementsByClassName("rsch");
 		for(let i = 0; i < results.length; i++){
 			results[i].innerHTML = "__";
 		}
-		var spinner = document.getElementById("spinner");
-		spinner.style.visibility = "hidden";
+		document.getElementById("spinner").style.visibility = "hidden";
+		document.getElementById("overlay").style.visibility = "hidden";
 	} else{
 		$.ajax({
 	        data : {
@@ -76,14 +68,16 @@ function getMetrics(reqMet, parts_list){
 					results[i].innerHTML = data[i];
 				}
 			}
-			var spinner = document.getElementById("spinner");
-			spinner.style.visibility = "hidden";
+			document.getElementById("spinner").style.visibility = "hidden";
+			document.getElementById("overlay").style.visibility = "hidden";
 	    });
 	}
 }
 
 
 function loadSample(file){
+	document.getElementById("spinner").style.visibility = "visible";
+	document.getElementById("overlay").style.visibility = "visible";
 	$.ajax({
 		url:'static/ldr/' + file,
 		success:function(file_data){
@@ -94,21 +88,44 @@ function loadSample(file){
 		        type : 'POST',
 		        url : '/request'
 		    }).done(function(data) {
-		        var results = document.getElementsByClassName("req");
-				for(let i = 0; i < results.length; i++){
-					if(data[i]){
-						results[i].innerHTML = "✔";
-					} else {
-						results[i].innerHTML = "❌";
-					}
-				}
-
-				if(data.every(function(k){return k})){
-					getMetrics(true, file_data);
-				} else{
-					getMetrics(false, file_data);
-				}
+		        fillReqs(file_data, data);
 		    });
 		}
 	});
 };
+
+
+function fillReqs(file_data, data){
+	var results = document.getElementsByClassName("req");
+	for(let i = 0; i < results.length; i++){
+		if(data[i]){
+			results[i].innerHTML = "✔";
+		} else {
+			results[i].innerHTML = "❌";
+		}
+	}
+
+	switch(data[data.length - 1]){
+		case "A":
+			document.getElementById("chassis_type").innerHTML = "A";
+			document.getElementById("chassis_cost").innerHTML = "$30";
+			break;
+		case "B":
+			document.getElementById("chassis_type").innerHTML = "B";
+			document.getElementById("chassis_cost").innerHTML = "$40";
+			break;
+		case "C":
+			document.getElementById("chassis_type").innerHTML = "C";
+			document.getElementById("chassis_cost").innerHTML = "$50";
+			break;
+		default:
+			document.getElementById("chassis_type").innerHTML = "__";
+			document.getElementById("chassis_cost").innerHTML = "__";
+	}
+
+	if(data.every(function(k){return k})){
+		getMetrics(true, file_data);
+	} else{
+		getMetrics(false, file_data);
+	}
+}

@@ -31,7 +31,7 @@
 				<div class="container">
 					<br/>
 				  	<h1 class="display-4">LEGO Vehicle Analysis</h1>
-				  	<p class="lead">Welcome to the LEGO Industrial & Systems Engineering Module. Your objective is to design a new LEGO vehicle that maximizes profit. The model must satisfy all 10 <a href="#requirements">design requirements</a> specified below, and its market price will be determined by the 7 <a href="#market">market research</a> metrics below. Good Luck!</p>
+				  	<p class="lead">Welcome to the LEGO Industrial & Systems Engineering Module. Your objective is to design a new LEGO vehicle that maximizes revenue. The model must satisfy all 10 <a href="#requirements">design requirements</a> specified below, and its market price will be determined by the 7 <a href="#market">market research</a> metrics below. Good Luck!</p>
 				  	<hr class="my-4">
 				  	<p>Once you created the model of your vehicle in the Bricklink Studio, export it as a .ldr file (File → Export As → Export as LDraw) and upload it here for analysis.</p>
 				  	<p>
@@ -92,7 +92,7 @@
 			</div>
 
 			<!--Spinner-->
-			<div class="d-flex justify-content-center">
+			<div id="overlay" class="d-flex justify-content-center">
 			  	<div id='spinner' class="spinner-border" role="status">
 			    	<span class="sr-only">Loading...</span>
 			  	</div>
@@ -184,10 +184,14 @@
 					<div class = 'col-md-4'>
 						<a class='anchor' id='summary'></a>
 						<h2>Financial Summary</h2>
-						<p>Cost: <span class = "rsch">__</span></p>
+						<p>Chassis: <span id = "chassis_type">__</span> </p>
+						<p>Chassis Cost: <span id = "chassis_cost">__</span> </p>
+						<p>You must purcahse a chassis before designing a model. There are three chassis choices, each with a different size and cost.</p>
+						<br/>
+						<p>Mfg. Cost: <span class = "rsch">__</span></p>
 						<p>Market Price: <span class = "rsch">__</span></p>
-						<p>Profit: <span class = "rsch">__</span></p>
-						<p>The cost of your model is a sum of the costs of the individual parts used. The market price was determined as a function of the scores your model earned in the market researh metrics, weighted accordingly. The difference between the price and cost results in the profit.</p>
+						<p>Revenue: <span class = "rsch">__</span></p>
+						<p>The cost of your model is a sum of the costs of the individual parts used. The market price was determined as a function of the scores your model earned in the market researh metrics, weighted accordingly. The difference between the price and cost results in the revenue.</p>
 					</div>
 				</div>
 				<hr>
