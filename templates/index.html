@@ -31,7 +31,7 @@
 				<div class="container">
 					<br/>
 				  	<h1 class="display-4">LEGO Vehicle Analysis</h1>
-				  	<p class="lead">Welcome to the LEGO Industrial & Systems Engineering Module. Your objective is to design a new LEGO vehicle that maximizes revenue. The model must satisfy all 10 <a href="#requirements">design requirements</a> specified below, and its market price will be determined by the 7 <a href="#market">market research</a> metrics below. Good Luck!</p>
+				  	<p class="lead">Welcome to the LEGO Industrial & Systems Engineering Module. Your objective is to design a new LEGO vehicle that maximizes revenue. The model must satisfy all 10 design requirements specified below, and its market price will be determined by the 7 market research metrics below. You may only use parts available in the <a id ="cost" data-toggle="modal" data-target="#costModal">inventory</a>. Good Luck!</p>
 				  	<hr class="my-4">
 				  	<p>Once you created the model of your vehicle in the Bricklink Studio, export it as a .ldr file (File → Export As → Export as LDraw) and upload it here for analysis.</p>
 				  	<p>
@@ -194,6 +194,299 @@
 						<p>The cost of your model is a sum of the costs of the individual parts used. The market price was determined as a function of the scores your model earned in the market researh metrics, weighted accordingly. The difference between the price and cost results in the revenue.</p>
 					</div>
 				</div>
+
+				<div id="costModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+				  	<div class="modal-dialog modal-lg">
+				    	<div class="modal-content">
+					      	<div class="modal-header">
+					        	<h5 class="modal-title">Inventory</h5>
+					        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          		<span aria-hidden="true">&times;</span>
+					       		</button>
+					      	</div>
+					      	<div class="modal-body">
+					       		<p>You may ONLY use the parts available in the inventory; otherwise your model will not be analyzed. Since you will be purchasing the chassis separately, its cost does not add to the model's cost.</p>
+					       		<div class='parts'>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/3032.png')}}' alt = '3032'>
+					       				<p>
+					       					<span>Chassis A</span>
+					       					<br/>3032
+					       					<br/>$30
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/3035.png')}}' alt = '3035'>
+					       				<p>
+					       					<span>Chassis B</span>
+					       					<br/>3035
+					       					<br/>$40
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/3030.png')}}' alt = '3030'>
+					       				<p>
+					       					<span>Chassis C</span>
+					       					<br/>3030
+					       					<br/>$50
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/30027bc01.png')}}' alt = '30027bc01'>
+					       				<p>
+					       					<span>Tire & Rim</span>
+					       					<br/>30027bc01
+					       					<br/>$3
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/2926.png')}}' alt = '2926'>
+					       				<p>
+					       					<span>Axel</span>
+					       					<br/>2926
+					       					<br/>$2
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/61409.png')}}' alt = '61409'>
+					       				<p>
+					       					<span>Fender</span>
+					       					<br/>61409
+					       					<br/>$2
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/50950.png')}}' alt = '50950'>
+					       				<p>
+					       					<span>Fender</span>
+					       					<br/>50950
+					       					<br/>$2
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/30602.png')}}' alt = '30602'>
+					       				<p>
+					       					<span>Hood</span>
+					       					<br/>30602
+					       					<br/>$3
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/93604.png')}}' alt = '93604'>
+					       				<p>
+					       					<span>Hood</span>
+					       					<br/>93604
+					       					<br/>$3
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/2436a.png')}}' alt = '2436a'>
+					       				<p>
+					       					<span>Light Housing</span>
+					       					<br/>2436a
+					       					<br/>$2.50
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/44728.png')}}' alt = '44728'>
+					       				<p>
+					       					<span>Light Housing</span>
+					       					<br/>44728
+					       					<br/>$2.50
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/99781.png')}}' alt = '99781'>
+					       				<p>
+					       					<span>Light Housing</span>
+					       					<br/>99781
+					       					<br/>$2.50
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/87087.png')}}' alt = '87087'>
+					       				<p>
+					       					<span>Light Housing</span>
+					       					<br/>87087
+					       					<br/>$2
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/2412b.png')}}' alt = '2412b'>
+					       				<p>
+					       					<span>Radiator</span>
+					       					<br/>2412b
+					       					<br/>$1.50
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/98138.png')}}' alt = '98138'>
+					       				<p>
+					       					<span>Light</span>
+					       					<br/>98138
+					       					<br/>$1
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/54200.png')}}' alt = '54200'>
+					       				<p>
+					       					<span>Turn Signal</span>
+					       					<br/>54200
+					       					<br/>$1
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/3069b.png')}}' alt = '3069b'>
+					       				<p>
+					       					<span>License</span>
+					       					<br/>3069b
+					       					<br/>$1
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/2420.png')}}' alt = '2420'>
+					       				<p>
+					       					<span>Floor</span>
+					       					<br/>2420
+					       					<br/>$1.50
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/3023.png')}}' alt = '3023'>
+					       				<p>
+					       					<span>Floor</span>
+					       					<br/>3023
+					       					<br/>$1
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/3022.png')}}' alt = '3022'>
+					       				<p>
+					       					<span>Floor</span>
+					       					<br/>3022
+					       					<br/>$2
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/3829c01.png')}}' alt = '3829c01'>
+					       				<p>
+					       					<span>Console</span>
+					       					<br/>3829c01
+					       					<br/>$3
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/4079.png')}}' alt = '4079'>
+					       				<p>
+					       					<span>Seat</span>
+					       					<br/>4079
+					       					<br/>$2
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/60481.png')}}' alt = '60481'>
+					       				<p>
+					       					<span>Structure</span>
+					       					<br/>60481
+					       					<br/>$2
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/87552.png')}}' alt = '87552'>
+					       				<p>
+					       					<span>Structure</span>
+					       					<br/>87552
+					       					<br/>$2
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/3245b.png')}}' alt = '3245b'>
+					       				<p>
+					       					<span>Structure</span>
+					       					<br/>3245b
+					       					<br/>$3
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/3005.png')}}' alt = '3005'>
+					       				<p>
+					       					<span>Structure</span>
+					       					<br/>3005
+					       					<br/>$1.50
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/3004.png')}}' alt = '3004'>
+					       				<p>
+					       					<span>Structure</span>
+					       					<br/>3004
+					       					<br/>$2
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/93273.png')}}' alt = '93273'>
+					       				<p>
+					       					<span>Roof</span>
+					       					<br/>93273
+					       					<br/>$3
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/2432.png')}}' alt = '2432'>
+					       				<p>
+					       					<span>Roof</span>
+					       					<br/>2432
+					       					<br/>$1.50
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/6091.png')}}' alt = '6091'>
+					       				<p>
+					       					<span>Roof</span>
+					       					<br/>6091
+					       					<br/>$2
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/15068.png')}}' alt = '15068'>
+					       				<p>
+					       					<span>Roof</span>
+					       					<br/>15068
+					       					<br/>$3
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/85984.png')}}' alt = '85984'>
+					       				<p>
+					       					<span>Detail</span>
+					       					<br/>85984
+					       					<br/>$2
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/2431.png')}}' alt = '2431'>
+					       				<p>
+					       					<span>Detail</span>
+					       					<br/>2431
+					       					<br/>$1.50
+					       				</p>
+					       			</div>
+					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/3068b.png')}}' alt = '3068b'>
+					       				<p>
+					       					<span>Detail</span>
+					       					<br/>3068b
+					       					<br/>$1.50
+					       				</p>
+					       			</div>
+
+
+					       		</div>
+					      	</div>
+					    </div>
+				  	</div>
+				</div>
+
 				<hr>
 			</div>
 		</main>

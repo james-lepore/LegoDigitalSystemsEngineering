@@ -11,7 +11,7 @@ span[data-toggle="tooltip"]{
 	color:#e9ecef;
 }
 
-#carSelect{
+#carSelect, #cost{
 	cursor:pointer;
 	color:#007bff;
 }
@@ -83,4 +83,37 @@ a.anchor {
 	.weight{
 		margin-right: 40%;
 	}
+}
+
+.parts {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+}
+
+.part {
+	flex: 0 0 135px;
+	margin: 10px;
+	border: 1px solid #ccc;
+	box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
+	background:rgba(220,220,220,.7);
+	border-radius: 10px;
+}
+
+.part img {
+	max-width: 100%;
+	min-width: 100%;
+	min-height: 99px;
+	background-color:white;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+.part p {
+	padding: 10px 20px 0px;
+	text-align: center;
+}
+
+.part p span{
+	font-weight: 500;
 }
