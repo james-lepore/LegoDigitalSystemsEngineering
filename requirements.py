@@ -50,8 +50,12 @@ def seatObstruction(parts_list):
         for seat in parts_list["4079"]:
             for part in parts_list:
                 for instance in parts_list[part]:
-                    if abs(seat[1] - instance[1]) < 29 and abs(seat[3] - instance[3]) < 29 and \
-                       isclose(seat[2], instance[2] + 45, abs_tol = 40):
+                    print(seat)
+                    print(instance)
+                    print(abs(seat[1] - instance[1]) < 29)
+                    print(abs(seat[3] - instance[3]) < 29)
+                    print(instance[2] + 48 < seat[2])
+                    if abs(seat[1] - instance[1]) < 29 and abs(seat[3] - instance[3]) < 29 and instance[2] + 48 < seat[2]:
                         return False
     return seatOrientation(parts_list)
     
@@ -59,7 +63,7 @@ def seatObstruction(parts_list):
 def consoleFacingSeat(parts_list, seat):
     """Helper function that determines whether the seat is positioned facing the console"""
     console = parts_list["3829c01"][0]
-    if abs(seat[1] - console[1]) <= 30 and abs(seat[2] - console[2]) <= 10 and abs(seat[3] - console[3]) <= 30:
+    if abs(seat[1] - console[1]) <= 30.1 and abs(seat[2] - console[2]) <= 10.1 and abs(seat[3] - console[3]) <= 30.1:
             return True
     return False
     
@@ -365,13 +369,13 @@ def getCargoSpaceScore(parts_list):
         return cargoMap[2]
     elif ratio > .6:
         return cargoMap[3]
-    elif ratio > .5:
+    elif ratio > .55:
         return cargoMap[4]
-    elif ratio > .4:
+    elif ratio > .5:
         return cargoMap[5]
-    elif ratio > .35:
+    elif ratio > .45:
         return cargoMap[6]
-    elif ratio > .3:
+    elif ratio > .4:
         return cargoMap[7]
     elif ratio > .25:
         return cargoMap[8]
@@ -380,7 +384,7 @@ def getCargoSpaceScore(parts_list):
 
 
 def getAerodynamicsScore(parts_list):
-    aero_parts = {"50950":2, "30602":3, "60481":1.5, "93273":1, "6091":1, "15068":2.5, "85984":1, "54200":0.5}
+    aero_parts = {"50950":2, "30602":3, "60481":1.5, "93273":1, "6091":1, "15068":2.5, "85984":1, "54200":0.5, "93604":2}
     aerodynamicsMap = [20, 30, 40, 50, 60, 70, 80, 85, 90, 95, 100];
     aero_score = 0
     if "3829c01" in parts_list:

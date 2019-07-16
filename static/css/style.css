@@ -103,10 +103,37 @@ a.anchor {
 .part img {
 	max-width: 100%;
 	min-width: 100%;
-	min-height: 99px;
 	background-color:white;
 	border-top-right-radius: 10px;
 	border-top-left-radius: 10px;
+}
+
+@media (min-width: 992px){
+	.part{
+		flex: 0 0 130px;
+	}
+}
+
+@media (max-width: 515px){
+	.part{
+		flex: 0 0 115px;
+	}
+}
+
+@media (max-width: 459px){
+	.part{
+		flex: 0 0 100px;
+	}
+
+	.part p{
+		word-break: break-all;
+	}
+}
+
+@media (max-width: 439px){
+	.part{
+		flex: 0 0 90px;
+	}
 }
 
 .part p {

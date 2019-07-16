@@ -78,6 +78,8 @@ function getMetrics(reqMet, parts_list){
 function loadSample(file){
 	document.getElementById("spinner").style.visibility = "visible";
 	document.getElementById("overlay").style.visibility = "visible";
+	document.getElementById("file").value = null;
+
 	$.ajax({
 		url:'static/ldr/' + file,
 		success:function(file_data){
