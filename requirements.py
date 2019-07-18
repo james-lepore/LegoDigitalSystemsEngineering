@@ -12,6 +12,9 @@ def getPartsList(lines):
     BrickLink ID Number and the data is a list of the different 
     instances of that part within the model"""
     parts_list = {}
+    acceptable_parts = {"3032","3035","3030","30027bc01","2926","61409","50950","30602","2436a","44728","99781", \
+                        "87087","2412b","98138","54200","3069b","2420","3023","3022","3829c01","4079","60481", \
+                        "87552","3245b","93273","2432","6091","15068","85984","2431","3068b","3005","3004","93604"}
     for line in lines:
         lst = line.split(" ")
         if lst[0] == '1':
@@ -19,6 +22,11 @@ def getPartsList(lines):
             if part not in parts_list:
                 parts_list[part] = [];
             parts_list[part] += [list(map(float, lst[1:-1]))]
+    
+    for part in parts_list:
+        if part not in acceptable_parts:
+            return int(part)
+        
     return parts_list
 
 
@@ -50,12 +58,8 @@ def seatObstruction(parts_list):
         for seat in parts_list["4079"]:
             for part in parts_list:
                 for instance in parts_list[part]:
-                    print(seat)
-                    print(instance)
-                    print(abs(seat[1] - instance[1]) < 29)
-                    print(abs(seat[3] - instance[3]) < 29)
-                    print(instance[2] + 48 < seat[2])
-                    if abs(seat[1] - instance[1]) < 29 and abs(seat[3] - instance[3]) < 29 and instance[2] + 48 < seat[2]:
+                    if seat!=instance and abs(seat[1] - instance[1]) < 29 and abs(seat[3] - instance[3]) < 29 and \
+                       isclose(seat[2], instance[2] + 45, abs_tol = 40):
                         return False
     return seatOrientation(parts_list)
     
@@ -248,7 +252,7 @@ def getCost(parts_list):
         if part not in chassis:
             total_cost += len(parts_list[part]) * float(cost_list[part])
     
-    return "%.2f" % (total_cost)
+    return "%.0f" % (total_cost)
 
 
 def getMarketPrice(parts_list):
@@ -256,11 +260,11 @@ def getMarketPrice(parts_list):
         + getStabilityScore(parts_list) * .05 + getHeadlightScore(parts_list) * .05 \
         + getTaillightScore(parts_list) * .05 + getCargoSpaceScore(parts_list) * .25 \
         + getAerodynamicsScore(parts_list) * .20
-    return "%.2f" % (price * 3)
+    return "%.0f" % (price * 3)
 
 
 def getProfit(parts_list):
-    return "%.2f" % (float(getMarketPrice(parts_list)) - float(getCost(parts_list)))
+    return "%.0f" % (float(getMarketPrice(parts_list)) - float(getCost(parts_list)))
 
 
 def getSeatingScore(parts_list):

@@ -10,17 +10,8 @@ function getResults() {
 	if (!file){return;}
 	if(file["name"].split('.').pop() != "ldr") {
 		alert("Invalid File. The file must be an LDraw (.ldr) file.");
-		document.location.reload(true);
-		/*
-		var results = document.getElementsByClassName("req");
-		for(let i = 0; i < results.length; i++){
-			results[i].innerHTML = "❔";
-		}
-		var results = document.getElementsByClassName("rsch");
-		for(let i = 0; i < results.length; i++){
-			results[i].innerHTML = "__";
-		}
-		*/
+		//document.location.reload(true);
+		resetPage();
 		return;
 	}
 	document.getElementById("spinner").style.visibility = "visible";
@@ -37,7 +28,14 @@ function getResults() {
 	        type : 'POST',
 	        url : '/request'
 	    }).done(function(data) {
-	        fillReqs(file_data, data);
+	    	if(data[0] == "False"){
+	    		document.getElementById("spinner").style.visibility = "hidden";
+				document.getElementById("overlay").style.visibility = "hidden";
+				resetPage();
+	    		alert("Invalid Part Used: " + data[1]);
+	    	} else{
+	    		fillReqs(file_data, data);
+	    	}
 	    });
 	};
 	reader.readAsText(file);
@@ -129,5 +127,19 @@ function fillReqs(file_data, data){
 		getMetrics(true, file_data);
 	} else{
 		getMetrics(false, file_data);
+	}
+}
+
+function resetPage(){
+	document.getElementById("file").value = null;
+	var results = document.getElementsByClassName("req");
+	for(let i = 0; i < results.length; i++){
+		results[i].innerHTML = "❔";
+	}
+	document.getElementById("chassis_type").innerHTML = "__";
+	document.getElementById("chassis_cost").innerHTML = "__";
+	var results = document.getElementsByClassName("rsch");
+	for(let i = 0; i < results.length; i++){
+		results[i].innerHTML = "__";
 	}
 }

@@ -19,6 +19,9 @@ def getData():
     f = request.form['contents']
     lines = f.split("\n")
     parts_list = script.getPartsList(lines)
+    if type(parts_list) == int:
+        return jsonify(["False", parts_list])
+    
     results = [script.seatOrientation(parts_list), \
                script.seatObstruction(parts_list), \
                script.consoleOrientation(parts_list), \
