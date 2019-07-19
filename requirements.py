@@ -25,8 +25,8 @@ def getPartsList(lines):
     
     for part in parts_list:
         if part not in acceptable_parts:
-            return int(part)
-        
+            return part
+           
     return parts_list
 
 
