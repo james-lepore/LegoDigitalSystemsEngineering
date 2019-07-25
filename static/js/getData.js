@@ -32,7 +32,7 @@ function getResults() {
 	    		document.getElementById("spinner").style.visibility = "hidden";
 				document.getElementById("overlay").style.visibility = "hidden";
 				resetPage();
-	    		alert("Invalid Part Used: " + data[1]);
+	    		alert(data[1]);
 	    	} else{
 	    		fillReqs(file_data, data);
 	    	}

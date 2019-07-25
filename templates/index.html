@@ -31,7 +31,7 @@
 				<div class="container">
 					<br/>
 				  	<h1 class="display-4">LEGO Vehicle Analysis</h1>
-				  	<p class="lead">Welcome to the LEGO Industrial & Systems Engineering Module. Your objective is to design a new LEGO vehicle that maximizes revenue. The model must satisfy all 10 design requirements specified below, and its market price will be determined by the 7 market research metrics below. You may only use parts available in the <a id ="cost" data-toggle="modal" data-target="#costModal">inventory</a>. Good Luck!</p>
+				  	<p class="lead">Welcome to the LEGO Industrial & Systems Engineering Module. Your objective is to design a new LEGO vehicle that maximizes revenue. The model must satisfy all 10 design requirements specified below, and then its market price will be determined by the 7 market research metrics below. You may only use parts available in the <a id ="cost" data-toggle="modal" data-target="#costModal">inventory</a>. Good Luck!</p>
 				  	<hr class="my-4">
 				  	<p>Once you created the model of your vehicle in the Bricklink Studio, export it as a .ldr file (File → Export As → Export as LDraw) and upload it here for analysis.</p>
 				  	<p>
@@ -178,7 +178,7 @@
 							<p>Aerodynamics: <span class = "rsch">__</span></p>
 							<p class='weight'>Weight: 20%</p>
 						</div>
-						<p>The Market Price of your vehicle will only be calculated if your vehicle satisfies all the design requirements. It be determined by how well your vehicle performs in these 7 key market metric categories. Try to maximize the score in each of the categories to increase the value of your model.</p>
+						<p>The Market Price of your vehicle will only be calculated if your vehicle satisfies all of the design requirements. It is determined by how well your vehicle performs in these 7 key categories. Try to maximize the score in each of the categories to increase the value of your model.</p>
 					</div>
 
 					<div class = 'col-md-4'>
@@ -191,10 +191,11 @@
 						<p>Mfg. Cost: <span class = "rsch">__</span></p>
 						<p>Market Price: <span class = "rsch">__</span></p>
 						<p>Revenue: <span class = "rsch">__</span></p>
-						<p>The cost of your model is a sum of the costs of the individual parts used. The market price was determined as a function of the scores your model earned in the market researh metrics, weighted accordingly. The difference between the price and cost results in the revenue.</p>
+						<p>The cost of your model is a sum of the costs of the individual parts used. The market price is determined as a function of the scores that your model earned in the market research metrics, weighted accordingly. The difference between the price and cost results in the revenue.</p>
 					</div>
 				</div>
 
+				<!-- Inventory Modal -->
 				<div id="costModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 				  	<div class="modal-dialog modal-lg">
 				    	<div class="modal-content">
@@ -328,14 +329,6 @@
 					       				</p>
 					       			</div>
 					       			<div class='part'>
-					       				<img src='{{url_for('static', filename = 'images/54200.png')}}' alt = '54200'>
-					       				<p>
-					       					<span>Turn Signal</span>
-					       					<br/>54200
-					       					<br/>$1
-					       				</p>
-					       			</div>
-					       			<div class='part'>
 					       				<img src='{{url_for('static', filename = 'images/3069b.png')}}' alt = '3069b'>
 					       				<p>
 					       					<span>License</span>
@@ -456,6 +449,14 @@
 					       				</p>
 					       			</div>
 					       			<div class='part'>
+					       				<img src='{{url_for('static', filename = 'images/54200.png')}}' alt = '54200'>
+					       				<p>
+					       					<span>Detail</span>
+					       					<br/>54200
+					       					<br/>$1
+					       				</p>
+					       			</div>
+					       			<div class='part'>
 					       				<img src='{{url_for('static', filename = 'images/85984.png')}}' alt = '85984'>
 					       				<p>
 					       					<span>Detail</span>
@@ -490,8 +491,9 @@
 				<hr>
 			</div>
 		</main>
+		
 		<footer class='container'>
-			<p>Copyright © 2019 Paul T. Grogan</p>
+			<p>Copyright © 2019 James Lepore</p>
 		</footer>
 	</body>
 	<script src={{ url_for('static', filename='js/jquery-3.4.1.min.js') }}></script>

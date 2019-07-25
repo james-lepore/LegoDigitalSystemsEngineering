@@ -15,17 +15,25 @@ def getPartsList(lines):
     acceptable_parts = {"3032","3035","3030","30027bc01","2926","61409","50950","30602","2436a","44728","99781", \
                         "87087","2412b","98138","54200","3069b","2420","3023","3022","3829c01","4079","60481", \
                         "87552","3245b","93273","2432","6091","15068","85984","2431","3068b","3005","3004","93604"}
-    for line in lines:
-        lst = line.split(" ")
-        if lst[0] == '1':
-            part = lst[-1].replace(".dat\r", "")
-            if part not in parts_list:
-                parts_list[part] = [];
-            parts_list[part] += [list(map(float, lst[1:-1]))]
+    
+    try:
+        for line in lines:
+            lst = line.split(" ")
+            if lst[0] == '1':
+                if len(lst) == 15:
+                    print(len(lst), lst)
+                    part = lst[-1].replace(".dat\r", "")
+                    if part not in parts_list:
+                        parts_list[part] = [];
+                    parts_list[part] += [list(map(float, lst[1:-1]))]
+                else:
+                    return "Invalid line format in file:\n" + line
+    except:
+        return "Part not found in LDraw Database:" + part
     
     for part in parts_list:
         if part not in acceptable_parts:
-            return part
+            return "Invalid Part Used: " + part
            
     return parts_list
 
@@ -260,7 +268,7 @@ def getMarketPrice(parts_list):
         + getStabilityScore(parts_list) * .05 + getHeadlightScore(parts_list) * .05 \
         + getTaillightScore(parts_list) * .05 + getCargoSpaceScore(parts_list) * .25 \
         + getAerodynamicsScore(parts_list) * .20
-    return "%.0f" % (price * 3)
+    return "%.0f" % (price * 2.25)
 
 
 def getProfit(parts_list):

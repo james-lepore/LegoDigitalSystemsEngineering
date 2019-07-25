@@ -5,6 +5,5 @@ Created on Jul 19, 2019
 '''
 import pymesh
 
-
 m = pymesh.form_mesh("3032.obj")
 
