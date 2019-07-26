@@ -2,13 +2,14 @@ span[data-toggle="tooltip"]{
 	cursor: pointer;
 }
 
-#navbar{
+.navbar{
 	display: flex;
 	justify-content: space-between;
 }
 
-.nav-link, .nav-link:hover{
-	color:#e9ecef;
+.navbar-dark .navbar-nav .nav-link, 
+.navbar-dark .navbar-nav .nav-link:hover{
+	color:#e9ecef; 
 }
 
 #carSelect, #cost{
@@ -55,9 +56,14 @@ span[data-toggle="tooltip"]{
 	cursor: pointer; 
 }
 
-
 .jumbotron{
 	padding-bottom: 1.5em;
+}
+
+@media (max-width: 576px){
+	.jumbotron{
+		padding-top: 3em;
+	}
 }
 
 #content{

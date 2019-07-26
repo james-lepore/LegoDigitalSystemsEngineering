@@ -21,7 +21,6 @@ def getPartsList(lines):
             lst = line.split(" ")
             if lst[0] == '1':
                 if len(lst) == 15:
-                    print(len(lst), lst)
                     part = lst[-1].replace(".dat\r", "")
                     if part not in parts_list:
                         parts_list[part] = [];
