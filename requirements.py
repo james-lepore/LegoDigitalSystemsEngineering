@@ -21,7 +21,8 @@ def getPartsList(lines):
             lst = line.split(" ")
             if lst[0] == '1':
                 if len(lst) == 15:
-                    part = lst[-1].replace(".dat\r", "")
+                    part = lst[-1].replace(".dat", "")
+                    part = part.replace("\r", "")
                     if part not in parts_list:
                         parts_list[part] = [];
                     parts_list[part] += [list(map(float, lst[1:-1]))]
@@ -275,7 +276,7 @@ def getProfit(parts_list):
 
 
 def getSeatingScore(parts_list):
-    seatingMap = [0, 30, 60, 70, 85, 90, 95, 97.5, 100];
+    seatingMap = [0, 35, 60, 70, 85, 90, 95, 97.5, 100];
     try:
         return seatingMap[len(parts_list["4079"])]
     except IndexError:
@@ -380,13 +381,13 @@ def getCargoSpaceScore(parts_list):
         return cargoMap[2]
     elif ratio > .6:
         return cargoMap[3]
-    elif ratio > .55:
-        return cargoMap[4]
     elif ratio > .5:
-        return cargoMap[5]
+        return cargoMap[4]
     elif ratio > .45:
-        return cargoMap[6]
+        return cargoMap[5]
     elif ratio > .4:
+        return cargoMap[6]
+    elif ratio > .35:
         return cargoMap[7]
     elif ratio > .25:
         return cargoMap[8]
@@ -396,7 +397,7 @@ def getCargoSpaceScore(parts_list):
 
 def getAerodynamicsScore(parts_list):
     aero_parts = {"50950":2, "30602":3, "60481":1.5, "93273":1, "6091":1, "15068":2.5, "85984":1, "54200":0.5, "93604":2}
-    aerodynamicsMap = [20, 30, 40, 50, 60, 70, 80, 85, 90, 95, 100];
+    aerodynamicsMap = [20, 30, 40, 55, 60, 70, 80, 85, 90, 95, 100];
     aero_score = 0
     if "3829c01" in parts_list:
         console = parts_list["3829c01"][0]
