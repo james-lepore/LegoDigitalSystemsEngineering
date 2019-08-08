@@ -33,7 +33,7 @@ def getPartsList(lines):
     
     for part in parts_list:
         if part not in acceptable_parts:
-            return "Invalid Part Used: " + part
+            return "Invalid Part Used: " + part + ". You may only use parts in the Inventory."
            
     return parts_list
 
@@ -61,7 +61,7 @@ def seatOrientation(parts_list):
     
 
 def seatObstruction(parts_list):
-    """Seat area shall not be obstructed by components."""
+    """Seat area shall not have any pieces obstructing a seated minifigure's head."""
     if "4079" in parts_list:
         for seat in parts_list["4079"]:
             for part in parts_list:
@@ -235,6 +235,8 @@ def numChassis(parts_list):
 
 ''' MARKET RESEARCH '''
 def getChassisType(parts_list):
+    """Returns string of chassis type, False if 0
+    or more than one chassis"""
     if numChassis(parts_list):
         if "3032" in parts_list:
             return "A"
@@ -246,6 +248,7 @@ def getChassisType(parts_list):
 
 
 def getCost(parts_list):
+    """Returns sum of the cost of parts used in the model"""
     f = open("PartsList.csv")
     cost_list = {}
     for line in f:
@@ -264,6 +267,7 @@ def getCost(parts_list):
 
 
 def getMarketPrice(parts_list):
+    """Returns weighted sum of scores of market metric categories"""
     price = getSeatingScore(parts_list) * .25 + getVentilationScore(parts_list) * .15 \
         + getStabilityScore(parts_list) * .05 + getHeadlightScore(parts_list) * .05 \
         + getTaillightScore(parts_list) * .05 + getCargoSpaceScore(parts_list) * .25 \
@@ -272,10 +276,12 @@ def getMarketPrice(parts_list):
 
 
 def getProfit(parts_list):
+    """Returns market price - total cost, resulting in profit"""
     return "%.0f" % (float(getMarketPrice(parts_list)) - float(getCost(parts_list)))
 
 
 def getSeatingScore(parts_list):
+    """Returns score corresponding to number of seats in the model"""
     seatingMap = [0, 35, 60, 70, 85, 90, 95, 97.5, 100];
     try:
         return seatingMap[len(parts_list["4079"])]
@@ -286,6 +292,7 @@ def getSeatingScore(parts_list):
 
 
 def getVentilationScore(parts_list):
+    """Returns score corresponding to number of vent pieces in the model"""
     ventilationMap = [20, 35, 50, 65, 75, 90, 100];
     num_parts = 0
     vent_parts = ["2412b", "61409"]
@@ -301,6 +308,7 @@ def getVentilationScore(parts_list):
 
 
 def getStabilityScore(parts_list):
+    """Returns score corresponding to number of wheel sets in model"""
     wheel_count = countWheels(parts_list)
     if(wheel_count) < 4:
         return 0
@@ -310,6 +318,8 @@ def getStabilityScore(parts_list):
 
 
 def getHeadlightScore(parts_list):
+    """Returns score corresponding to number of headlights with
+    proper placement in model"""
     headlightMap = [0, 0, 60, 65, 80, 85, 90, 95, 100];
     num_lights = headlightCounter(parts_list)
     try:
@@ -319,6 +329,8 @@ def getHeadlightScore(parts_list):
 
 
 def getTaillightScore(parts_list):
+    """Returns score corresponding to number of taillights with
+    proper placement in model"""
     taillightMap = [0, 0, 80, 90, 100];
     num_lights = taillightCounter(parts_list)
     try:
@@ -328,6 +340,8 @@ def getTaillightScore(parts_list):
     
 
 def findMaxVolume(parts_list):
+    """Returns maximum volume the model could take on based
+    on chassis size and model height"""
     if "3032" in parts_list:
         chassis = parts_list["3032"][0]
         base = 9600
@@ -354,6 +368,8 @@ def findMaxVolume(parts_list):
 
 
 def getCargoSpaceScore(parts_list):
+    """Returns score based on ratio of space taken up /
+    maximum possible space for the model"""
     cargoMap = [0, 15, 25, 40, 50, 65, 85, 90, 95, 100];
     if numChassis(parts_list):
         max_vol = findMaxVolume(parts_list)
@@ -396,6 +412,8 @@ def getCargoSpaceScore(parts_list):
 
 
 def getAerodynamicsScore(parts_list):
+    """Returns score based on how many curved pieces 
+    are facing front in the model"""
     aero_parts = {"50950":2, "30602":3, "60481":1.5, "93273":1, "6091":1, "15068":2.5, "85984":1, "54200":0.5, "93604":2}
     aerodynamicsMap = [20, 30, 40, 55, 60, 70, 80, 85, 90, 95, 100];
     aero_score = 0
@@ -412,40 +430,5 @@ def getAerodynamicsScore(parts_list):
         return aerodynamicsMap[int(aero_score)]
     except IndexError:
         return aerodynamicsMap[10]
-
-
-''' TEST '''
-if __name__ == "__main__":
-    car = "modelA"
-    parts_list = getPartsList(car)
-    print(car)
     
-    #for item in parts_list:
-    #    print(item, "\n", parts_list[item])
-    
-    print("\n--Requirements Check--")
-    print("Num Chassis:\t", numChassis(parts_list))
-    print("Num Wheels:\t", numWheels(parts_list))
-    print("Seat Pos:\t", seatOrientation(parts_list))
-    print("Console Pos:\t", consoleOrientation(parts_list))
-    print("License Pos:\t", licensePlateOrientation(parts_list))
-    print("Taillight Pos:\t", taillightOrientation(parts_list))
-    print("Headlight Pos:\t", headlightOrientation(parts_list))
-    print("Wheel Pos:\t", wheelOrientation(parts_list))
-    print("Seat Clear:\t", seatObstruction(parts_list))
-    print("Connectivity:\t", connectivity(parts_list))
-    
-    print("\n--Market Research--")
-    print("Seating:\t",getSeatingScore(parts_list))
-    print("Ventilation:\t", getVentilationScore(parts_list))
-    print("Stability:\t", getStabilityScore(parts_list))
-    print("Headlight:\t", getHeadlightScore(parts_list))
-    print("Taillight:\t", getTaillightScore(parts_list))
-    print("Cargo Space:\t", getCargoSpaceScore(parts_list))
-    print("Aerodynamics:\t", getAerodynamicsScore(parts_list))
-    
-    print("\n--Summary--")
-    print("Mfg. Cost:\t$", getCost(parts_list))
-    print("Market Price:\t$", getMarketPrice(parts_list))
-    print("Net Profit:\t$", getProfit(parts_list))
     

@@ -12,6 +12,16 @@ span[data-toggle="tooltip"]{
 	color:#e9ecef; 
 }
 
+.toggler-parent{
+	display: flex;
+	justify-content: flex-end;
+}
+
+.navbar-toggler{
+	display: flex;
+	align-self: flex-end;
+}
+
 #carSelect, #cost{
 	cursor:pointer;
 	color:#007bff;
