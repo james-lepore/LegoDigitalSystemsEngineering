@@ -30,7 +30,6 @@ def getData():
                script.headlightOrientation(parts_list), \
                script.taillightOrientation(parts_list), \
                script.licensePlateOrientation(parts_list), \
-               script.connectivity(parts_list), \
                script.numChassis(parts_list), \
                script.getChassisType(parts_list)]
     return jsonify(results)
